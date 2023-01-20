@@ -112,7 +112,23 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-task" id="toc-the-task" class="nav-link active" data-scroll-target="#the-task">The Task</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">1. Introduction</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">2. Data</a></li>
+  <li><a href="#visualization-design" id="toc-visualization-design" class="nav-link" data-scroll-target="#visualization-design">3. Visualization Design</a></li>
+  <li><a href="#key-observations" id="toc-key-observations" class="nav-link" data-scroll-target="#key-observations">4. Key Observations</a></li>
+  <li><a href="#step-by-step-description" id="toc-step-by-step-description" class="nav-link" data-scroll-target="#step-by-step-description">5. Step-by-Step Description</a>
+  <ul class="collapse">
+  <li><a href="#cleaning-the-data" id="toc-cleaning-the-data" class="nav-link" data-scroll-target="#cleaning-the-data">5.1 Cleaning the data</a></li>
+  <li><a href="#create-calculated-fields-parameters" id="toc-create-calculated-fields-parameters" class="nav-link" data-scroll-target="#create-calculated-fields-parameters">5.2 Create Calculated Fields &amp; Parameters</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">6. References</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -140,8 +156,239 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="the-task" class="level1">
+<h1>The Task</h1>
+<p>Creating an age-sex pyramid that illustrates Singapore’s demographic structure by age cohort and gender using Tableau. Our data source is the <em>Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022</em>. You can find the data set at <a href="https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data" title="Population Trends">Singstat</a>.</p>
+</section>
+<section id="introduction" class="level1">
+<h1>1. Introduction</h1>
+<p>The population pyramid, or age-sex pyramid, depicts how a population (typically a country or region) is distributed by age groups and sexes. Males are generally depicted on the left, while females are on the right of the illustration, and it is measured either as absolute numbers or as percentage of the total population.</p>
+<p>Population pyramid is often regarded as an effective way to graphically represent population age and distribution, because they provide a very clear picture of the population distribution. A population pyramid can be used to get a lot of information about the population broken down by age and sex, which can aid reader to better understand the extent of development and other aspects of the population.</p>
+</section>
+<section id="data" class="level1">
+<h1>2. Data</h1>
+<p>With data collected from the Department of Statistics web page, the goal of this exercise is to visualize the age, cohort, and gender demographic structure of Singapore in June 2022.</p>
+</section>
+<section id="visualization-design" class="level1">
+<h1>3. Visualization Design</h1>
+<p><img src="images/image-1324773368.png" class="img-fluid"></p>
+<p>To see the population pyramid in Tableau Public, click <u><strong>here</strong></u>.</p>
+</section>
+<section id="key-observations" class="level1">
+<h1>4. Key Observations</h1>
+</section>
+<section id="step-by-step-description" class="level1">
+<h1>5. Step-by-Step Description</h1>
+<p>This section details the steps required to produce the Population Pyramid in Section 3.</p>
+<section id="cleaning-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-the-data">5.1 Cleaning the data</h2>
+<table class="table">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 74%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Load the ‘Singapore Residents by Planning Area Subzone Age Group Sex and Type of Dwelling June 2022.csv’ file into Tableau Desktop</td>
+<td><img src="images/image-357682613.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Click on ‘Cleaned with Data Interpreter’ to clean the dataset</td>
+<td><img src="images/image-102312379.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Select both ‘2022(Female)’ &amp; ‘2022(Male)’</td>
+<td><img src="images/image-1419471246.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Drag selection into empty space to append both tables</td>
+<td><img src="images/image-1627643494.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><p>Click ‘Add’ Filters to add the following filters on dataset.</p>
+<p>Click on ‘Add’ &amp; select a field to filter.</p>
+<p>Click on ‘All’ and unselect for those to exclude.</p>
+<p>Click ‘OK’ once done.</p></td>
+<td><p><img src="images/image-1249045247.png" class="img-fluid"></p>
+<p><img src="images/image-617553951.png" class="img-fluid"></p>
+<p><img src="images/image-791384706.png" class="img-fluid"></p>
+<p><img src="images/image-636531291.png" class="img-fluid"></p>
+<p><img src="images/image-158889735.png" class="img-fluid"></p></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Right-click on ‘Sheet’ column and select Split. This is to split this column into two columns - one column containing before the delimiter () and one column containing inside the delimiter ()</td>
+<td><p><img src="images/image-1003826478.png" class="img-fluid"></p>
+<p><img src="images/image-704665137.png" class="img-fluid"></p></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Right click on ‘Sheet - Split 1’ to rename this to ‘Gender’</td>
+<td><p><img src="images/image-1336143292.png" class="img-fluid"></p>
+<p><img src="images/image-1797975068.png" class="img-fluid"></p></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Hide Sheet, Table Name, 2022</td>
+<td><img src="images/image-1708026497.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="create-calculated-fields-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="create-calculated-fields-parameters">5.2 Create Calculated Fields &amp; Parameters</h2>
+<p>Go to Sheet 1 for the following steps.</p>
+<table class="table">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 62%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><p>Right click on the empty spaces and click on ‘Create Parameter’.</p>
+<p>Create the following Parameter called ‘Total Columns’ and include current value = 3, data type = Integer</p></td>
+<td><p><img src="images/image-1588407711.png" class="img-fluid"></p>
+<p><img src="images/image-882174751.png" class="img-fluid"></p></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><p>Right click on the empty spaces and click on ‘Create Calculated Field’.</p>
+<p>Create the following calculated field according to the formula as screenshot:</p>
+<ul>
+<li><p>Female</p></li>
+<li><p>Male</p></li>
+<li><p>Column</p></li>
+<li><p>Row</p></li>
+<li><p>Index</p></li>
+</ul></td>
+<td><p><img src="images/image-1063901354.png" class="img-fluid"></p>
+<p><img src="images/image-1835402956.png" class="img-fluid"></p>
+<p><img src="images/image-593212130.png" class="img-fluid"></p>
+<p><img src="images/image-1152835092.png" class="img-fluid"></p>
+<p><img src="images/image-1403136103.png" class="img-fluid"></p></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="references" class="level1">
+<h1>6. References</h1>
+<p>Wikimedia Foundation. (n.d.). <em>Population pyramid</em>. Wikipedia. Retrieved January 20, 2023, from https://en.wikipedia.org/wiki/Population_pyramid</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

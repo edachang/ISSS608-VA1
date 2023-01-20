@@ -7,6 +7,13 @@
     "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
+    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
+    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
+    "title": "Hands-on Exercise 1",
+    "section": "",
+    "text": "The code chunk below uses p_load() of pacman package to check if tidyverse packages are installed in the computer. If they are, then they will be launched into R.\n\npacman::p_load(tidyverse)\n\n\n\n\n\nexam_data <- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "ISSS608-VA1",
@@ -14,10 +21,24 @@
     "text": "Welcome to ISSS608 Visual Analytics and Applications. In this website, you will find my coursework prepared for this course."
   },
   {
-    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
-    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
-    "title": "Hands-on Exercise 1",
+    "objectID": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html",
+    "href": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html",
+    "title": "Take-Home_Ex01",
     "section": "",
-    "text": "The code chunk below uses p_load() of pacman package to check if tidyverse packages are installed in the computer. If they are, then they will be launched into R.\n\npacman::p_load(tidyverse)\n\n\n\n\n\nexam_data <- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+    "text": "Creating an age-sex pyramid that illustrates Singapore’s demographic structure by age cohort and gender using Tableau. Our data source is the Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022. You can find the data set at Singstat."
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#cleaning-the-data",
+    "href": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#cleaning-the-data",
+    "title": "Take-Home_Ex01",
+    "section": "5.1 Cleaning the data",
+    "text": "5.1 Cleaning the data\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1\nLoad the ‘Singapore Residents by Planning Area Subzone Age Group Sex and Type of Dwelling June 2022.csv’ file into Tableau Desktop\n\n\n\n2\nClick on ‘Cleaned with Data Interpreter’ to clean the dataset\n\n\n\n3\nSelect both ‘2022(Female)’ & ‘2022(Male)’\n\n\n\n4\nDrag selection into empty space to append both tables\n\n\n\n5\nClick ‘Add’ Filters to add the following filters on dataset.\nClick on ‘Add’ & select a field to filter.\nClick on ‘All’ and unselect for those to exclude.\nClick ‘OK’ once done.\n\n\n\n\n\n\n\n6\nRight-click on ‘Sheet’ column and select Split. This is to split this column into two columns - one column containing before the delimiter () and one column containing inside the delimiter ()\n\n\n\n\n7\nRight click on ‘Sheet - Split 1’ to rename this to ‘Gender’\n\n\n\n\n8\nHide Sheet, Table Name, 2022"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#create-calculated-fields-parameters",
+    "href": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#create-calculated-fields-parameters",
+    "title": "Take-Home_Ex01",
+    "section": "5.2 Create Calculated Fields & Parameters",
+    "text": "5.2 Create Calculated Fields & Parameters\nGo to Sheet 1 for the following steps.\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1\nRight click on the empty spaces and click on ‘Create Parameter’.\nCreate the following Parameter called ‘Total Columns’ and include current value = 3, data type = Integer\n\n\n\n\n2\nRight click on the empty spaces and click on ‘Create Calculated Field’.\nCreate the following calculated field according to the formula as screenshot:\n\nFemale\nMale\nColumn\nRow\nIndex\n\n\n\n\n\n\n\n\n3\n\n\n\n\n4\n\n\n\n\n5\n\n\n\n\n6\n\n\n\n\n7\n\n\n\n\n8"
   }
 ]
