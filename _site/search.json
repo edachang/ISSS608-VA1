@@ -39,6 +39,13 @@
     "href": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#create-calculated-fields-parameters",
     "title": "Take-Home_Ex01",
     "section": "5.2 Create Calculated Fields & Parameters",
-    "text": "5.2 Create Calculated Fields & Parameters\nGo to Sheet 1 for the following steps.\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1\nRight click on the empty spaces and click on ‘Create Parameter’.\nCreate the following Parameter called ‘Total Columns’ and include current value = 3, data type = Integer\n\n\n\n\n2\nRight click on the empty spaces and click on ‘Create Calculated Field’.\nCreate the following calculated field according to the formula as screenshot:\n\nFemale\nMale\nColumn\nRow\nIndex\n\n\n\n\n\n\n\n\n3\n\n\n\n\n4\n\n\n\n\n5\n\n\n\n\n6\n\n\n\n\n7\n\n\n\n\n8"
+    "text": "5.2 Create Calculated Fields & Parameters\nGo to Sheet 1 for the following steps.\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1\nRight click on the empty spaces and click on ‘Create Parameter’.\nCreate the following Parameter called ‘Total Columns’ and include current value = 3, data type = Integer\n\n\n\n\n2\nRight click on the empty spaces and click on ‘Create Calculated Field’.\nCreate the following calculated field according to the formula as screenshot:\n\nFemale\nMale\nColumn\nRow\nIndex"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#create-visualization",
+    "href": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#create-visualization",
+    "title": "Take-Home_Ex01",
+    "section": "5.3 Create Visualization",
+    "text": "5.3 Create Visualization\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot"
   }
 ]
