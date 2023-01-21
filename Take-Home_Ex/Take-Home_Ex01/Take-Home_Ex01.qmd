@@ -67,27 +67,27 @@ This section details the steps required to produce the Population Pyramid in Sec
 
 Go to Sheet 1 for the following steps.
 
-+-----+----------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
-| No. | Step                                                                                                     | Screenshot                                             |
-+=====+==========================================================================================================+========================================================+
-| 1   | Right click on the empty spaces and click on 'Create Parameter'.                                         | ![](images/image-1588407711.png)                       |
-|     |                                                                                                          |                                                        |
-|     | Create the following Parameter called 'Total Columns' and include current value = 3, data type = Integer | ![](images/image-882174751.png)                        |
-+-----+----------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
-| 2   | Right click on the empty spaces and click on 'Create Calculated Field'.                                  | ![](images/image-440595829.png)                        |
-|     |                                                                                                          |                                                        |
-|     | Create the following calculated field according to the formula as screenshot:                            | ![](images/image-1706950192.png)                       |
-|     |                                                                                                          |                                                        |
-|     | -   Female                                                                                               | ![](images/image-992617989.png)                        |
-|     |                                                                                                          |                                                        |
-|     | -   Male                                                                                                 | ![](images/image-1325774114.png)                       |
-|     |                                                                                                          |                                                        |
-|     | -   Column                                                                                               | ![](images/image-567021483.png)                        |
-|     |                                                                                                          |                                                        |
-|     | -   Row                                                                                                  | ![](images/image-22770143.png)                         |
-|     |                                                                                                          |                                                        |
-|     | -   Index                                                                                                |                                                        |
-+-----+----------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
++-----+----------------------------------------------------------------------------------------------------------+----------------------------------+
+| No. | Step                                                                                                     | Screenshot                       |
++=====+==========================================================================================================+==================================+
+| 1   | Right click on the empty spaces and click on 'Create Parameter'.                                         | ![](images/image-1588407711.png) |
+|     |                                                                                                          |                                  |
+|     | Create the following Parameter called 'Total Columns' and include current value = 3, data type = Integer | ![](images/image-882174751.png)  |
++-----+----------------------------------------------------------------------------------------------------------+----------------------------------+
+| 2   | Right click on the empty spaces and click on 'Create Calculated Field'.                                  | ![](images/image-440595829.png)  |
+|     |                                                                                                          |                                  |
+|     | Create the following calculated field according to the formula as screenshot:                            | ![](images/image-1706950192.png) |
+|     |                                                                                                          |                                  |
+|     | -   Female                                                                                               | ![](images/image-992617989.png)  |
+|     |                                                                                                          |                                  |
+|     | -   Male                                                                                                 | ![](images/image-1325774114.png) |
+|     |                                                                                                          |                                  |
+|     | -   Column                                                                                               | ![](images/image-567021483.png)  |
+|     |                                                                                                          |                                  |
+|     | -   Row                                                                                                  | ![](images/image-22770143.png)   |
+|     |                                                                                                          |                                  |
+|     | -   Index                                                                                                |                                  |
++-----+----------------------------------------------------------------------------------------------------------+----------------------------------+
 
 ## 5.3 Create Visualization
 
