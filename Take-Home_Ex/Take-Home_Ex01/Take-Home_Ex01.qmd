@@ -1,5 +1,5 @@
 ---
-title: "Take-Home_Ex01"
+title: "Take Home Exercise 1"
 author: "Eda Chang"
 ---
 

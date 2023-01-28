@@ -23,29 +23,64 @@
   {
     "objectID": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html",
     "href": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html",
-    "title": "Take-Home_Ex01",
+    "title": "Take Home Exercise 1",
     "section": "",
     "text": "Creating an age-sex pyramid that illustrates Singapore’s demographic structure by age cohort and gender using Tableau. Our data source is the Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022. You can find the data set at Singstat."
   },
   {
     "objectID": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#cleaning-the-data",
     "href": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#cleaning-the-data",
-    "title": "Take-Home_Ex01",
+    "title": "Take Home Exercise 1",
     "section": "5.1 Cleaning the data",
     "text": "5.1 Cleaning the data\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1\nLoad the ‘Singapore Residents by Planning Area Subzone Age Group Sex and Type of Dwelling June 2022.csv’ file into Tableau Desktop\n\n\n\n2\nClick on ‘Cleaned with Data Interpreter’ to clean the dataset\n\n\n\n3\nSelect both ‘2022(Female)’ & ‘2022(Male)’\n\n\n\n4\nDrag selection into empty space to append both tables\n\n\n\n5\nClick ‘Add’ Filters to add the following filters on dataset.\nClick on ‘Add’ & select a field to filter.\nClick on ‘All’ and unselect for those to exclude.\nClick ‘OK’ once done.\n\n\n\n\n\n\n\n6\nRight-click on ‘Sheet’ column and select Split. This is to split this column into two columns - one column containing before the delimiter () and one column containing inside the delimiter ()\n\n\n\n\n7\nRight click on ‘Sheet - Split 1’ to rename this to ‘Gender’\n\n\n\n\n8\nHide Sheet, Table Name, 2022"
   },
   {
     "objectID": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#create-calculated-fields-parameters",
     "href": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#create-calculated-fields-parameters",
-    "title": "Take-Home_Ex01",
+    "title": "Take Home Exercise 1",
     "section": "5.2 Create Calculated Fields & Parameters",
     "text": "5.2 Create Calculated Fields & Parameters\nGo to Sheet 1 for the following steps.\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1\nRight click on the empty spaces and click on ‘Create Parameter’.\nCreate the following Parameter called ‘Total Columns’ and include current value = 3, data type = Integer\n\n\n\n\n2\nRight click on the empty spaces and click on ‘Create Calculated Field’.\nCreate the following calculated field according to the formula as screenshot:\n\nFemale\nMale\nColumn\nRow\nIndex"
   },
   {
     "objectID": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#create-visualization",
     "href": "Take-Home_Ex/Take-Home_Ex01/Take-Home_Ex01.html#create-visualization",
-    "title": "Take-Home_Ex01",
+    "title": "Take Home Exercise 1",
     "section": "5.3 Create Visualization",
     "text": "5.3 Create Visualization\n\n\n\n\n\n\n\n\nNo.\nStep\nScreenshot\n\n\n\n\n1\nClick and Drop both Column & Row into Columns and Rows Respectively\n\n\n\n2\nRight click on Column and select ‘Discrete’. Repeat the same for Row.\n\n\n\n3\nDrag Male, Female & Age Group into columns and rows as per screenshot. Note that Male should be on the left and Female should be on the right.\n\n\n\n4\nDrag both ‘Index’ and ‘Planning Area’ into ‘Detail’ under Marks\n\n\n\n5\nRight-click on Column and select Compute Using > Planning Area. Repeat the same steps for Row.\n\n\n\n6\nRight click on ‘Male’ Axis and select Edit Axis. Check Reversed.\n\n\n\n\n7\nDrag Planning Area to Filters. Click on ‘Top’ then select ‘By field:’. Change to Top 9 by population and click on Ok\n\n\n\n8\nRight click on Column and uncheck ‘Show Header’. Repeat the same for Row\n\n\n\n9\nRight click on ‘Age Group’ and select sort. Select Sort by ‘Data source order’ & Descending.\n\n\n\n\n10\nSelect SUM(Female) under Marks, and click on ‘Color’. Select the color for Female population\n\n\n\n11\nRight click on SUM(Male) and uncheck Show Header.\n\n\n\n12\nClick on SUM(Male) in Marks, then drag Male into Label. Do the same for Female.\nDo the following formatting:\n\nMale: Tableau Book, 8pt, hex code: #00007f\nFemale: Tableau Book, 8pt, hex code: #63445b\n\n\n\n\n\n13\nRight click on Age Group and select Format.\nSelect Shading colour: #e6e6e6\nand Alignment: Center\n\n\n\n\n14\nSelect a bar from one trellis. Right click on the bar and select Annotate > Mark\n\n\n\n15\nType the following in the Annotation and click on OK.\n\n\n\n16\nSelect the annotation and select Shading: None, Line: None. Repeat step 15 - 16 for all trellis. Drag each annotation box to top left corner of the trellis.\n\n\n\n17\nRename Sheet 1 to ‘Singapore Population Pyramid’\n\n\n\n18\nRight click on Title and click on Edit Title.\nFormatting:\nHeader (Tableau Semibold, 16 & bold)\nSub-Header (Tableau Light, 12)\nFemale & Male to color code same as font color"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex02/Take-Home_Ex02.html",
+    "href": "Take-Home_Ex/Take-Home_Ex02/Take-Home_Ex02.html",
+    "title": "Take-home Exercise 2",
+    "section": "",
+    "text": "We will complete this take-home exercise based on a classmate’s take-home exercise 1 submission using Tableau. We will critique the peer submission in terms of clarity and aesthetics. Following that, we will rework the original design using the data visualization principles and best practices we learned in Lesson 1 and 2.\nSingstats datasets are downloaded for take-home exercises 1 and 2. We will use ggplot2 and its extensions and the tidyverse packages for take-home exercise 2."
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex02/Take-Home_Ex02.html#critique",
+    "href": "Take-Home_Ex/Take-Home_Ex02/Take-Home_Ex02.html#critique",
+    "title": "Take-home Exercise 2",
+    "section": "2.1 Critique",
+    "text": "2.1 Critique\nClarity\nAesthetics\n2.2 Proposed Design\nAdvantages"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex02/Take-Home_Ex02.html#data-preparation",
+    "href": "Take-Home_Ex/Take-Home_Ex02/Take-Home_Ex02.html#data-preparation",
+    "title": "Take-home Exercise 2",
+    "section": "3.1 Data Preparation",
+    "text": "3.1 Data Preparation"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex02/Take-Home_Ex02.html#data-visualization",
+    "href": "Take-Home_Ex/Take-Home_Ex02/Take-Home_Ex02.html#data-visualization",
+    "title": "Take-home Exercise 2",
+    "section": "3.2 Data Visualization",
+    "text": "3.2 Data Visualization"
+  },
+  {
+    "objectID": "In-class_Ex/In-class_Ex03.html",
+    "href": "In-class_Ex/In-class_Ex03.html",
+    "title": "In-class Exercise",
+    "section": "",
+    "text": "Installing and loading R packages\nTwo packages will be installed and loaded. They are tidyverse and ggiraph.\n\npacman::p_load(ggiraph, tidyverse)\n\nImporting data\n\nexam_data <- read_csv(\"data/Exam_data.csv\")\n\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(dotsize = 0.5)\n\n\n\n\n\np <- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(tooltip = ID),\n    stackgroups = TRUE, \n    binwidth = 1, \n    method = \"histodot\") +\n  scale_y_continuous(NULL, \n                     breaks = NULL)\ngirafe(\n  ggobj = p,\n  width_svg = 6,\n  height_svg = 6*0.618\n)"
   }
 ]

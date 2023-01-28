@@ -1,0 +1,36 @@
+---
+title: "Take-home Exercise 2"
+author: "Eda Chang"
+---
+
+# 1. The Task
+
+We will complete this take-home exercise based on a classmate's take-home exercise 1 submission using Tableau. We will critique the peer submission in terms of clarity and aesthetics. Following that, we will rework the original design using the data visualization principles and best practices we learned in Lesson 1 and 2.
+
+[Singstats](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data "Population Trends") datasets are downloaded for take-home exercises 1 and 2. We will use ggplot2 and its extensions and the tidyverse packages for take-home exercise 2.
+
+# 2. Visualization Critique
+
+In this take-home exercise, we will be reviewing and remaking this [visual](https://public.tableau.com/app/profile/thomas.hoang8154/viz/takehome1_16740523080150/Dashboard3).
+
+![](images/Dashboard%203.png){fig-align="center" width="692"}
+
+## 2.1 Critique
+
+Clarity
+
+Aesthetics
+
+2.2 Proposed Design
+
+Advantages
+
+# 3. How the data visualization was prepared
+
+## 3.1 Data Preparation
+
+## 3.2 Data Visualization
+
+# 4. Final Visualization
+
+# 5. Learning Points
