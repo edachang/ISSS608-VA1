@@ -78,7 +78,7 @@ Highlighted bar with maximum population count across planning areas & gender
 Ensure following packages are installed.
 
 ```{r}
-packages = c('gganimate', 'tidyverse','knitr', 'scales')
+packages = c('tidyverse','knitr', 'scales')
 
 for(p in packages){
   if(!require(p, character.only = T)){

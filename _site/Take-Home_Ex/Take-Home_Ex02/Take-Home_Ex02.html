@@ -343,7 +343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>3. How the data visualization was prepared</h1>
 <p>Ensure following packages are installed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'gganimate'</span>, <span class="st">'tidyverse'</span>,<span class="st">'knitr'</span>, <span class="st">'scales'</span>)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'tidyverse'</span>,<span class="st">'knitr'</span>, <span class="st">'scales'</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> packages){</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(p, <span class="at">character.only =</span> T)){</span>
@@ -352,27 +352,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(p, <span class="at">character.only =</span> T)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: gganimate</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ggplot2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>No renderer backend detected. gganimate will default to writing frames to separate files
-Consider installing:
-- the `gifski` package for gif output
-- the `av` package for video output
-and restarting the R session</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: tidyverse</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   1.0.0 
 ✔ tibble  3.1.8      ✔ dplyr   1.0.10
 ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
 ✔ readr   2.1.3      ✔ forcats 0.5.2 
-✔ purrr   1.0.0      
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -396,7 +383,7 @@ The following object is masked from 'package:readr':
 </div>
 <p>First, we use the read_csv() function of the readr package to import <em>Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022</em> csv dataset into the R environment.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SGPopulation_June2022 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/SGPopulation_June2022.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SGPopulation_June2022 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/SGPopulation_June2022.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 88312 Columns: 6
 ── Column specification ────────────────────────────────────────────────────────
@@ -423,25 +410,25 @@ dbl (1): Pop
 </ul></li>
 <li><p>Create “SGPopulation” dataframe for each Planning Area, group by Age Group, Sex:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SGPopulation <span class="ot">&lt;-</span> SGPopulation_June2022</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>SGPopulation <span class="ot">=</span> <span class="fu">select</span>(SGPopulation_June2022, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">5</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>SGPopulation<span class="sc">$</span>AgeGroup[SGPopulation<span class="sc">$</span>AgeGroup<span class="sc">==</span><span class="st">"5_to_9"</span>] <span class="ot">&lt;-</span> <span class="st">"05_to_09"</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>SGPopulation<span class="sc">$</span>AgeGroup[SGPopulation<span class="sc">$</span>AgeGroup<span class="sc">==</span><span class="st">"0_to_4"</span>] <span class="ot">&lt;-</span> <span class="st">"00_to_04"</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>SGPopulation <span class="ot">&lt;-</span> SGPopulation <span class="sc">%&gt;%</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PlanningArea, AgeGroup, Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>SGPopulation <span class="ot">&lt;-</span> SGPopulation_June2022</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>SGPopulation <span class="ot">=</span> <span class="fu">select</span>(SGPopulation_June2022, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">5</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>SGPopulation<span class="sc">$</span>AgeGroup[SGPopulation<span class="sc">$</span>AgeGroup<span class="sc">==</span><span class="st">"5_to_9"</span>] <span class="ot">&lt;-</span> <span class="st">"05_to_09"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>SGPopulation<span class="sc">$</span>AgeGroup[SGPopulation<span class="sc">$</span>AgeGroup<span class="sc">==</span><span class="st">"0_to_4"</span>] <span class="ot">&lt;-</span> <span class="st">"00_to_04"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>SGPopulation <span class="ot">&lt;-</span> SGPopulation <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PlanningArea, AgeGroup, Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <h3 id="ii-choosing-the-top-9-planning-areas-in-singapore-with-the-highest-population" class="anchored">ii) Choosing the Top 9 Planning Areas in Singapore with the Highest Population</h3>
 <p>The following step is to identify the top 9 planning areas based on the highest population by Age Group and Gender. The top 9 planning areas are:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>SGPopulation_Top9 <span class="ot">&lt;-</span> SGPopulation <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PlanningArea) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Pop), sum) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Pop))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Top9 <span class="ot">&lt;-</span> (SGPopulation_Top9[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>,<span class="dv">1</span>])</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>Top9</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SGPopulation_Top9 <span class="ot">&lt;-</span> SGPopulation <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PlanningArea) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Pop), sum) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Pop))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>Top9 <span class="ot">&lt;-</span> (SGPopulation_Top9[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>,<span class="dv">1</span>])</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>Top9</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 1
   PlanningArea 
@@ -459,29 +446,29 @@ dbl (1): Pop
 </div>
 <p>We will now select these 9 planning areas from the SGPopulation dataframe.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>SGPopulation <span class="ot">&lt;-</span> <span class="fu">subset</span>(SGPopulation, PlanningArea <span class="sc">==</span> <span class="st">"Bedok"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Tampines"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Jurong West"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Sengkang"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Woodlands"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Hougang"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Yishun"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Choa Chu Kang"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Punggol"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SGPopulation <span class="ot">&lt;-</span> <span class="fu">subset</span>(SGPopulation, PlanningArea <span class="sc">==</span> <span class="st">"Bedok"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Tampines"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Jurong West"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Sengkang"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Woodlands"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Hougang"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Yishun"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Choa Chu Kang"</span> <span class="sc">|</span> PlanningArea <span class="sc">==</span> <span class="st">"Punggol"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <h3 id="iii-male_sgpopulation-and-female_sgpopulation-dataframe-creation" class="anchored">iii) “Male_SGPopulation” and “Female_SGPopulation” dataframe creation</h3>
 <p>We will produce the dataframes “Male_SGPopulation” and “Female_SGPopulation” using the dplyr function <a href="https://dplyr.tidyverse.org/reference/filter.html" style="font-size: 11pt;">filter()</a>.</p>
 <p>We also utilize the <a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a> function to set the values of “Female_SGPopulation” to negative. This way, both “Male_SGPopulation” and “Female_SGPopulation” barcharts can be reflected onto the same chart.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Male_SGPopulation <span class="ot">&lt;-</span> SGPopulation <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(., Sex<span class="sc">==</span><span class="st">'Male'</span>) </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>Female_SGPopulation <span class="ot">&lt;-</span> SGPopulation <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(., Sex<span class="sc">==</span><span class="st">'Female'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(., <span class="at">Pop =</span> Pop<span class="sc">*-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Male_SGPopulation <span class="ot">&lt;-</span> SGPopulation <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(., Sex<span class="sc">==</span><span class="st">'Male'</span>) </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Female_SGPopulation <span class="ot">&lt;-</span> SGPopulation <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(., Sex<span class="sc">==</span><span class="st">'Female'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(., <span class="at">Pop =</span> Pop<span class="sc">*-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <h3 id="iv-creation-of-rank-column-in-both-male_sgpopulation-and-female_sgpopulation-dataframes" class="anchored">iv) Creation of “Rank” column in both “Male_SGPopulation” and “Female_SGPopulation” dataframes</h3>
 <p>Next, we organized the population by Planning Areas and Gender and rank them in descending order.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Male_SGPopulationranked <span class="ot">&lt;-</span> Male_SGPopulation <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(PlanningArea, Pop) <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PlanningArea) <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>Pop))</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>Female_SGPopulationranked <span class="ot">&lt;-</span> Female_SGPopulation <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(PlanningArea, Pop) <span class="sc">%&gt;%</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PlanningArea) <span class="sc">%&gt;%</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(Pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Male_SGPopulationranked <span class="ot">&lt;-</span> Male_SGPopulation <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(PlanningArea, Pop) <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PlanningArea) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>Pop))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>Female_SGPopulationranked <span class="ot">&lt;-</span> Female_SGPopulation <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(PlanningArea, Pop) <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PlanningArea) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(Pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></li>
 </ul>
 </section>
