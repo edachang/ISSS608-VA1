@@ -51,6 +51,8 @@ Currently, the arrangement of the planning areas is in alphabetical order. We sh
 
 ## 2.2 Proposed Design
 
+![](photo_2023-01-29_16-50-05.jpg)
+
 ### Advantages:
 
 #### (a) Correct Ordering of Y-Axis:
@@ -72,6 +74,19 @@ Title of Chart "Population variation of Age and gender in the 9 most populated p
 Highlighted bar with maximum population count across planning areas & gender
 
 # 3. How the data visualization was prepared
+
+Ensure following packages are installed.
+
+```{r}
+packages = c('gganimate', 'tidyverse','knitr', 'scales')
+
+for(p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+```
 
 First, we use the read_csv() function of the readr package to import *Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022* csv dataset into the R environment.
 
