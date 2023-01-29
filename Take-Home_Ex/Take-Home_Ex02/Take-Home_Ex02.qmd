@@ -35,19 +35,21 @@ As the male and female population are both colored differently in the chart, the
 
 There are different ranges for each X-axis for each planning area and gender. For instance, Jurong West may range from 0 to 60k, while Hougang may range from 0 to 45k. Having different X-Axis range for each planning area and gender will cause their values to appear greater or lesser than they actually are, thus skewing the results of the comparison. To ensure accurate comparison, the X-Axis range should be standardized across all planning areas and genders.
 
+#### (e) Absences of source:
+
+No recognition of the data source nor author.
+
 ### Aesthetics
 
-#### (e) Colours of Bar Chart is not purposeful:
+#### (f) Colours of Bar Chart is not purposeful:
 
 Although visually appealing, gradient colors in the graph convey little additional information to the reader. The use of gradient colors in a graph can be distracting and make it difficult for a reader to quickly identify the most significant points. Maximum population count for each planning area & gender can be highlighted to draw attention to points of interest.
 
-#### (f) Arrangement of planning areas is not purposeful:
+#### (g) Arrangement of planning areas is not purposeful:
 
 Currently, the arrangement of the planning areas is in alphabetical order. We should arrange the planning areas with the highest population counts at the top left of the trellis, and the lowest population counts at the bottom right. It will also help with readability, as viewers will be able to quickly identify the most populated areas and compare their populations with the least populated areas.
 
 ## 2.2 Proposed Design
-
-![](images/photo_2023-01-29_16-50-05.jpg)
 
 ### Advantages:
 
@@ -63,7 +65,9 @@ Title of Chart "Population variation of Age and gender in the 9 most populated p
 
 #### (d) Consistent X-Axis across Planning Areas & Gender for easy comparison
 
-#### (e) Usage of colours to showcase insights
+#### (e) Include recognition of data source and author
+
+#### (f) Usage of colours to showcase insights
 
 Highlighted bar with maximum population count across planning areas & gender
 
