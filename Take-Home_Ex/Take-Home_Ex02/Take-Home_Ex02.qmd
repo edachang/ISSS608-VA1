@@ -190,7 +190,7 @@ The steps below will be used to generate our Age-Sex pyramid in ggplot2:
 
 -   Applied [facet_wrap](https://ggplot2.tidyverse.org/reference/facet_wrap.html) to generate plots of the different subset of the data (in this case, the 9 most highly populated Plannng Areas identified);
 
-```{r}
+```{r fig.align="center", echo = FALSE, fig.width= 20, fig.height=15}
 p <- ggplot(data=SGPopulation,aes(x=AgeGroup, fill=Sex)) +
   geom_bar(data=Female_SGPopulationranked, aes(y=Pop, fill = ifelse(rank == 1, "Maximum","Female")), stat='identity')+
   geom_bar(data=Male_SGPopulationranked, aes(y=Pop, fill = ifelse(rank == 1, "Maximum","Male")), stat='identity')+
@@ -202,13 +202,13 @@ p <- ggplot(data=SGPopulation,aes(x=AgeGroup, fill=Sex)) +
   ylab('Population Count') +
   scale_y_continuous(label=function(n){format(abs(n),big.mark = ",")}) +
   ggtitle('Population variation of Age and gender in the 9 most populated planning areas in Singapore', subtitle = 'June 2022') + facet_wrap(~ PlanningArea) +
-  theme(plot.title = element_text(size = 10, face = "bold"),
-        plot.subtitle = element_text(size = 10, face = "bold"),
+  theme(plot.title = element_text(size = 20, face = "bold"),
+        plot.subtitle = element_text(size = 15, face = "bold"),
         axis.text = element_text(size=15),
           axis.text.x = element_text(size = 15),
-          axis.title = element_text(size = 10, face = "bold"),
-          strip.text = element_text(size = 10),
-          legend.text=element_text(size=10),legend.title=element_text(size=10))
+          axis.title = element_text(size = 18, face = "bold"),
+          strip.text = element_text(size = 18),
+          legend.text=element_text(size=18),legend.title=element_text(size=18))
 
 print(p)
 ```

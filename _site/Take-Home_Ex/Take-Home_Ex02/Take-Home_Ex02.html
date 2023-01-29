@@ -498,29 +498,13 @@ dbl (1): Pop
 <li><p>Inserting data labels, data source and legends;</p></li>
 <li><p>Applied <a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a> to generate plots of the different subset of the data (in this case, the 9 most highly populated Plannng Areas identified);</p></li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>SGPopulation,<span class="fu">aes</span>(<span class="at">x=</span>AgeGroup, <span class="at">fill=</span>Sex)) <span class="sc">+</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>Female_SGPopulationranked, <span class="fu">aes</span>(<span class="at">y=</span>Pop, <span class="at">fill =</span> <span class="fu">ifelse</span>(rank <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Maximum"</span>,<span class="st">"Female"</span>)), <span class="at">stat=</span><span class="st">'identity'</span>)<span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>Male_SGPopulationranked, <span class="fu">aes</span>(<span class="at">y=</span>Pop, <span class="at">fill =</span> <span class="fu">ifelse</span>(rank <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Maximum"</span>,<span class="st">"Male"</span>)), <span class="at">stat=</span><span class="st">'identity'</span>)<span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## add manual color scale</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">"legend"</span>,         <span class="do">###### in this call: colour change</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Maximum"</span> <span class="ot">=</span> <span class="st">"yellow2"</span>, <span class="st">"Female"</span> <span class="ot">=</span> <span class="st">"coral"</span>, <span class="st">"Male"</span> <span class="ot">=</span> <span class="st">"turquoise3"</span>)) <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">'Age Group'</span>) <span class="sc">+</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">'Population Count'</span>) <span class="sc">+</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">label=</span><span class="cf">function</span>(n){<span class="fu">format</span>(<span class="fu">abs</span>(n),<span class="at">big.mark =</span> <span class="st">","</span>)}) <span class="sc">+</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">'Population variation of Age and gender in the 9 most populated planning areas in Singapore'</span>, <span class="at">subtitle =</span> <span class="st">'June 2022'</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> PlanningArea) <span class="sc">+</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>),</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>),</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),<span class="at">legend.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex02_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Take-Home_Ex02_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="1920"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
