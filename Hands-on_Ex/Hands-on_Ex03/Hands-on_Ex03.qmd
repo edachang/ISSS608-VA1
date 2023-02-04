@@ -1,4 +1,4 @@
 ---
-title: "In-class Exercise 3"
+title: "Hands-on Exercise 3: Programming Interactive Data Visualisation with R"
 author: "Eda Chang"
 ---

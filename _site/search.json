@@ -89,5 +89,12 @@
     "title": "Take-home Exercise 2",
     "section": "2.2 Proposed Design",
     "text": "2.2 Proposed Design\n\n\nAdvantages:\n\n(a) Correct Ordering of Y-Axis:\nFollowing the traditional layout of population pyramid, the age groups will be arranged in a descending order.\n\n\n(b) Clear Title:\nTitle of Chart “Population variation of Age and gender in the 9 most populated planning areas in Singapore” will highlight key components that will be reflected in the chart.\n\n\n(c) Removing X-Axis to be less cluttered\n\n\n(d) Consistent X-Axis across Planning Areas & Gender for easy comparison\n\n\n(e) Include recognition of data source and author\n\n\n(f) Usage of colours to showcase insights\nHighlighted bar with maximum population count across planning areas & gender"
+  },
+  {
+    "objectID": "In-class_Ex/In-class_Ex04.html",
+    "href": "In-class_Ex/In-class_Ex04.html",
+    "title": "In-class Exercise 4",
+    "section": "",
+    "text": "pacman::p_load(plotly, DT, patchwork, tidyverse)\n\n\nexam_data <- read_csv(\"data/Exam_data.csv\")\n\n\nplot_ly(data = exam_data, \n        x = ~ENGLISH, \n        y = ~MATHS, \n        color = ~RACE) #<<"
   }
 ]
