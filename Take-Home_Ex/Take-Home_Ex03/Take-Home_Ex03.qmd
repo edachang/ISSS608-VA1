@@ -1,0 +1,71 @@
+---
+title: "Take-home Exercise 3"
+author: "Eda Chang"
+---
+
+# The Task
+
+In this exercise, we are required to uncover the salient patterns of the resale prices of public housing property by residential towns and estates in Singapore.
+
+# 1. Introduction
+
+As of 2020, 78.7% of Singaporeans live in public housing. In Singapore, there are three types of housing: lessee-occupied public housing, resale public housing, and rental public housing.
+
+The majority of Singapore's public housing is under lessee-occupied. Housing units are offered on a 99-year leasehold basis to applicants who meet specified income, citizenship, and property leasehold ownership requirements under Singapore's housing leasehold ownership program. The government still owns the estate's land and communal areas. New lessee-occupied flats will be sold via the Build-To-Order and Sale of Balance Flats programs. However, lessee-occupied public housing ca be sold in a resale market, subject to certain regulations. The government does not regulate resale market prices. Therefore, this exercise aims to look at the distribution and prices of the public housing in Singapore, which could be relevant in aiding the readers in making informed decisions when evaluation the resale market.
+
+# 2. Data
+
+We will be using "*Resale flat princes based on registration date from Jan-2017 onwards"* which is available at [Data.gov.sg](https://data.gov.sg/). For this exercise, we will only be looking at 2022 data and focusing on 3-Room, 4-Room and 5-Room types.
+
+# 3. Data Preparation
+
+Ensure following packages are installed.
+
+```{r}
+packages = c('tidyverse','knitr', 'scales','sf', 'tmap', 'highcharter', 'plotly')
+
+for(p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+
+```
+
+First, we use the read_csv() function of the readr package to import *Resale flat princes based on registration date from Jan-2017 onwards* csv dataset into the R environment.
+
+```{r}
+SGResale_2022 <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv")
+```
+
+read.csv() function from base R has the same functionality as read csv().
+
+Note: read csv() function is preferred over read.csv() because it preserves the whole variable name. read.csv() replaces any spaces in variable names with a period (.), where the names of the variables will be changed.
+
+As we will only be looking at 2022 data and focusing on 3-Room, 4-Room and 5-Room types, we perform the following filters on the dataset.
+
+-   Filter dataset where flat_type is 3-Room, 4-Room & 5-Room
+
+-   Filter dataset based on Year 2022
+
+```{r}
+
+SGResale_2022 <- subset(SGResale_2022, flat_type == "3 ROOM" | flat_type == "4 ROOM" |flat_type == "5 ROOM")
+SGResale_2022$Year = substr(SGResale_2022$month, 1, 4)
+SGResale_2022 <- subset(SGResale_2022, Year == "2022")
+```
+
+# 3. Visualization
+
+```{r}
+ggplot(data=SGResale_2022, 
+       aes(x= month, 
+           fill = town)) +
+  geom_histogram(bins=20, 
+                 color="grey30")
+```
+
+# 4. Key Observations
+
+# 6. References
