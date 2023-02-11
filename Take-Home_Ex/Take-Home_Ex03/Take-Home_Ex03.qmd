@@ -59,11 +59,7 @@ SGResale_2022 <- subset(SGResale_2022, Year == "2022")
 # 3. Visualization
 
 ```{r}
-ggplot(data=SGResale_2022, 
-       aes(x= month, 
-           fill = town)) +
-  geom_histogram(bins=20, 
-                 color="grey30")
+
 ```
 
 # 4. Key Observations

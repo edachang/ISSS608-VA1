@@ -118,24 +118,4 @@ wh_matrix <- data.matrix(wh)
 heatmaply(mtcars)
 ```
 
-# **Creating Parallel Coordinates Plots with R**
-
-```{r}
-pacman::p_load(GGally, parallelPlot, tidyverse)
-```
-
-```{r}
-wh <- read_csv("data/WHData-2018.csv")
-```
-
-```{r}
-ggparcoord(data = wh, 
-           columns = c(7:12))
-```
-
-```{r}
-histoVisibility <- rep(TRUE, ncol(wh))
-parallelPlot(wh,
-             rotateTitle = TRUE,
-             histoVisibility = histoVisibility)
-```
+# 
