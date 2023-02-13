@@ -22,7 +22,7 @@ We will be using "*Resale flat princes based on registration date from Jan-2017 
 Ensure following packages are installed.
 
 ```{r}
-packages = c('tidyverse','knitr', 'scales','sf', 'tmap', 'highcharter', 'plotly','lubridate')
+packages = c('tidyverse','knitr', 'scales','sf', 'tmap', 'highcharter', 'plotly','lubridate','ggridges','ggrepel')
 
 for(p in packages){
   if(!require(p, character.only = T)){
@@ -128,37 +128,155 @@ ggplot(data = SGResale_2022_byflat, mapping = aes(x = flat_type, y = price_per_s
        x = "Flat type", caption = "Source of data: Singapore Housing and Development Board ")
 ```
 
-::: panel-tabset
-## Plot
+Next we will group the dataset by town to find if the geographical effects of the flat's location on its resale price.
+
+1.  Create price per square metre as a better measure for comparing flat prices across different flat sizes.
 
 ```{r}
-ggplot(data = SGResale_2022_byflat, mapping = aes(x = flat_type, y = price_per_sqm)) +
-  # Make grouped boxplot
-  geom_boxplot(aes(fill = as.factor(quarter)), color = "black") +
-  theme_minimal() +
-  theme(legend.position = "top") +
-  scale_fill_viridis_d(option = "D") +
-  # Adjust lables and add title
-  labs(title = "HDB resale prices in 2022 by flat type", y="Price per square metre (SGD)", fill = "Quarter",
-       x = "Flat type", caption = "Source of data: Singapore Housing and Development Board ")
+
+SGResale_2022_psqm <- SGResale_2022 %>%
+  mutate(price_per_sqm = resale_price/floor_area_sqm)
+```
+
+::: panel-tabset
+## All Room Types
+
+```{r}
+
+SGResale_2022_bytown <- SGResale_2022_psqm %>% group_by(town)
+
+ggplot(SGResale_2022_bytown, aes(x=reorder(town, price_per_sqm), y=price_per_sqm)) +
+  geom_boxplot() +
+  labs(title="Average Flat Resale Price (psm) by Town for all room types in 2022 ", 
+       x="Town", 
+       y="Resale Price ($ psm)") +
+  theme_classic() +
+  theme(plot.title = element_text(size=10, hjust=0.5),
+        axis.title.x = element_text(size=10),
+        axis.text.x = element_text(angle=35, hjust=1),
+        axis.title.y = element_text(size=10))  
 
 ```
 
-## Data
+## 3 Room
 
 ```{r}
-ggplot(data = SGResale_2022_byflat, mapping = aes(x = flat_type, y = price_per_sqm)) +
-  # Make grouped boxplot
-  geom_boxplot(aes(fill = as.factor(quarter)), color = "black") +
-  theme_minimal() +
-  theme(legend.position = "top") +
-  scale_fill_viridis_d(option = "D") +
-  # Adjust lables and add title
-  labs(title = "HDB resale prices in 2022 by flat type", y="Price per square metre (SGD)", fill = "Quarter",
-       x = "Flat type", caption = "Source of data: Singapore Housing and Development Board ")
+type <- "3 ROOM"
+SGResale_2022_bytown <- SGResale_2022_psqm %>% group_by(town) %>% filter(flat_type==type)
+
+ggplot(SGResale_2022_bytown, aes(x=reorder(town, price_per_sqm), y=price_per_sqm)) +
+  geom_boxplot() +
+  labs(title=paste("Average Flat Resale Price (psm) by Town for", str_replace(lapply(type, tolower), '_', '-'), "flats"), 
+       x="Town", 
+       y="Resale Price ($ psm)") +
+  theme_classic() +
+  theme(plot.title = element_text(size=10, hjust=0.5),
+        axis.title.x = element_text(size=10),
+        axis.text.x = element_text(angle=35, hjust=1),
+        axis.title.y = element_text(size=10))  
+```
+
+## 4 Room
+
+```{r}
+type <- "4 ROOM"
+SGResale_2022_bytown <- SGResale_2022_psqm %>% group_by(town) %>% filter(flat_type==type)
+
+ggplot(SGResale_2022_bytown, aes(x=reorder(town, price_per_sqm), y=price_per_sqm)) +
+  geom_boxplot() +
+  labs(title=paste("Average Flat Resale Price (psm) by Town for", str_replace(lapply(type, tolower), '_', '-'), "flats"), 
+       x="Town", 
+       y="Resale Price ($ psm)") +
+  theme_classic() +
+  theme(plot.title = element_text(size=10, hjust=0.5),
+        axis.title.x = element_text(size=10),
+        axis.text.x = element_text(angle=35, hjust=1),
+        axis.title.y = element_text(size=10)) 
+```
+
+## 5 Room
+
+```{r}
+type <- "5 ROOM"
+SGResale_2022_bytown <- SGResale_2022_psqm %>% group_by(town) %>% filter(flat_type==type)
+
+ggplot(SGResale_2022_bytown, aes(x=reorder(town, price_per_sqm), y=price_per_sqm)) +
+  geom_boxplot() +
+  labs(title=paste("Average Flat Resale Price (psm) by Town for", str_replace(lapply(type, tolower), '_', '-'), "flats"), 
+       x="Town", 
+       y="Resale Price ($ psm)") +
+  theme_classic() +
+  theme(plot.title = element_text(size=10, hjust=0.5),
+        axis.title.x = element_text(size=10),
+        axis.text.x = element_text(angle=35, hjust=1),
+        axis.title.y = element_text(size=10)) 
 ```
 :::
 
-# 4. Key Observations
+Next, we plot the the distribution of price using rigdeline plot using ggridges package.
 
-# 6. References
+```{r}
+
+SGResale_2022_bytown <- SGResale_2022_psqm %>% group_by(town)
+  
+  # Plot the neighborhoods in an ascending order of price per sqm
+  ggplot(data = SGResale_2022_bytown, mapping = aes(x = price_per_sqm, y = reorder(as.factor(town),-price_per_sqm),
+                       fill = after_stat(x)
+                       )) +
+  geom_density_ridges_gradient(color = "white") +
+  scale_fill_viridis_c(option = "C") +
+  theme_minimal() +
+  
+  # Remove legend, grid line add title
+  theme(legend.position = "none") +
+  theme(panel.grid = element_blank()) +
+  labs(title = "HDB resale prices in 2022 by neighborhood", x = "Price per square metre (SGD)", y = "",
+       subtitle = "Neighborhood exhibit large differences",
+       caption = "Data: Housing and Development Board, Singapore")
+```
+
+Load ggrepel as package
+
+```{r}
+
+SGResale_2022_byhousingage <- as.data.frame(table(SGResale_2022$town))
+
+SGResale_2022 %>% 
+  group_by(town) %>% 
+  # Calculate housing age
+  mutate(housing_age = 2021 - lease_commence_date) %>% 
+  summarise(average_price = mean(resale_price), average_housing_age = mean(housing_age)) %>% 
+  bind_cols(volume = SGResale_2022_byhousingage$Freq) %>% 
+  ggplot(mapping = aes(x=average_housing_age, y=average_price)) +
+  geom_count(aes(size = volume, color = volume), alpha = 0.7) +
+  # Change size of count points
+  scale_size_area(max_size = 18) +
+  # Add lables next to count points
+  geom_text_repel(aes(label = town),size = 2.7) +
+  scale_y_continuous(labels = comma, limits = c(330000, 730000)) +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  scale_color_viridis_c(option = "C") +
+  labs(title = "HDB Resale flat features by neighborhood", x = "Housing age", y = "Resale price (SGD)", 
+       color = "Resale volume", size = "Resale volume", caption = "Source of data: Singapore Housing and Development Board, 2021.")  
+  
+```
+
+Visualize whether higher storey HDB commands a higher price in an interactive heatmap
+
+```{r}
+SGResale_2022_bystorey <- SGResale_2022 %>%
+  group_by(town, storey_range) %>% 
+  summarise(Mean_Resale_Price = mean(resale_price))
+```
+
+```{r}
+ggplot(data = SGResale_2022_bystorey, 
+                  mapping = aes(x = town, y = storey_range,fill = Mean_Resale_Price)) +
+            geom_tile() +
+  labs(title = "Heatmap of HDB breakdown by area and storey", x = "Town", y = "Storey") +
+  scale_fill_gradient(name = "Mean Resale Price",
+                      low = "#ffedde",
+                      high = "#c24b0c")+
+  theme(axis.text.x = element_text(angle = 45))
+```
