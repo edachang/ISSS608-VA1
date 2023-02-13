@@ -22,7 +22,7 @@ We will be using "*Resale flat princes based on registration date from Jan-2017 
 Ensure following packages are installed.
 
 ```{r}
-packages = c('tidyverse','knitr', 'scales','sf', 'tmap', 'highcharter', 'plotly')
+packages = c('tidyverse','knitr', 'scales','sf', 'tmap', 'highcharter', 'plotly','lubridate')
 
 for(p in packages){
   if(!require(p, character.only = T)){
@@ -58,9 +58,106 @@ SGResale_2022 <- subset(SGResale_2022, Year == "2022")
 
 # 3. Visualization
 
+## 3.1 Time Analysis
+
+1.  By plotting both resale volume and resale price over time, we can see how the HDB prices varies across Year 2022.
+
+We group the dataset by month and aggregate by average price:
+
 ```{r}
+SGResale_2022_bymonth <- SGResale_2022 %>%
+  group_by(month) %>% 
+  mutate(average_price = mean(resale_price))
+```
+
+Plotting both axis on the same graph:
+
+```{r}
+ ggplot(data = SGResale_2022_bymonth) +
+  # Plot the price
+  geom_bar(mapping = aes(x=month), fill="khaki2") +
+  # Change position of price
+  geom_point(mapping = aes(x=month, y=average_price/300), color = "royalblue4") +
+  geom_line(mapping = aes(x=month, y=average_price/300), group = 1, color = "royalblue4") +
+  # Add a second Y axis
+  scale_y_continuous(sec.axis = sec_axis(~.*300, name = "Resale price (SGD)", labels = comma)) +
+  
+  # Change color of the second Y axis to match with the color of resale price
+  theme_minimal() +
+  theme(axis.ticks.y.right = element_line(color = "royalblue4"),
+        axis.text.y.right = element_text(color = "royalblue4"), 
+        axis.title.y.right = element_text(color = "royalblue4")) +
+  
+  # Adjust styles, lables and add title
+  theme(axis.text.x=element_text(angle = 35)) +
+  labs(title = "HDB resale market in Year 2022", y="Resale volume", 
+       x = "Month", caption = "Source of data: Singapore Housing and Development Board")
+```
+
+2.  Plot boxplot by quarter and across flat type to see how prices fluctuated in the last year for different flat types.
+
+```{r}
+SGResale_2022_byflat <- SGResale_2022 %>%
+  group_by(flat_type) %>% 
+  mutate(quarter = quarter(ym(month)),
+         price_per_sqm = resale_price/floor_area_sqm)
+```
+
+```{r}
+ggplot(data = SGResale_2022_byflat, mapping = aes(x = flat_type, y = price_per_sqm)) +
+   geom_boxplot(color = "black") +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  scale_fill_viridis_d(option = "A") +
+  # Adjust lables and add title
+  labs(title = "HDB resale prices in 2022 by flat type", y="Price per square metre (SGD)",
+       x = "Flat type", caption = "Source of data: Singapore Housing and Development Board")
+```
+
+Using lubridate package, month can be transformed to quarters.
+
+```{r}
+ggplot(data = SGResale_2022_byflat, mapping = aes(x = flat_type, y = price_per_sqm)) +
+  # Make grouped boxplot
+  geom_boxplot(aes(fill = as.factor(quarter)), color = "black") +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  scale_fill_viridis_d(option = "D") +
+  # Adjust lables and add title
+  labs(title = "HDB resale prices in 2022 by flat type", y="Price per square metre (SGD)", fill = "Quarter",
+       x = "Flat type", caption = "Source of data: Singapore Housing and Development Board ")
+```
+
+::: panel-tabset
+## Plot
+
+```{r}
+ggplot(data = SGResale_2022_byflat, mapping = aes(x = flat_type, y = price_per_sqm)) +
+  # Make grouped boxplot
+  geom_boxplot(aes(fill = as.factor(quarter)), color = "black") +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  scale_fill_viridis_d(option = "D") +
+  # Adjust lables and add title
+  labs(title = "HDB resale prices in 2022 by flat type", y="Price per square metre (SGD)", fill = "Quarter",
+       x = "Flat type", caption = "Source of data: Singapore Housing and Development Board ")
 
 ```
+
+## Data
+
+```{r}
+ggplot(data = SGResale_2022_byflat, mapping = aes(x = flat_type, y = price_per_sqm)) +
+  # Make grouped boxplot
+  geom_boxplot(aes(fill = as.factor(quarter)), color = "black") +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  scale_fill_viridis_d(option = "D") +
+  # Adjust lables and add title
+  labs(title = "HDB resale prices in 2022 by flat type", y="Price per square metre (SGD)", fill = "Quarter",
+       x = "Flat type", caption = "Source of data: Singapore Housing and Development Board ")
+```
+:::
 
 # 4. Key Observations
 
