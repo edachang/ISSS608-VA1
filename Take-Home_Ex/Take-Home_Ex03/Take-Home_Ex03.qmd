@@ -278,5 +278,9 @@ ggplot(data = SGResale_2022_bystorey,
   scale_fill_gradient(name = "Mean Resale Price",
                       low = "#ffedde",
                       high = "#c24b0c")+
-  theme(axis.text.x = element_text(angle = 45))
+  theme(axis.text.x = element_text(angle = 45)
 ```
+
+# 4. References
+
+*Share of households in condos, apartments up almost 5 percentage points as proportion in HDB flats slips 3.7 points: census*. Business times. (2021, June 19). Retrieved February 13, 2023, from https://www.businesstimes.com.sg/singapore/economy-policy/share-households-condos-apartments-almost-5-percentage-points-proportion
