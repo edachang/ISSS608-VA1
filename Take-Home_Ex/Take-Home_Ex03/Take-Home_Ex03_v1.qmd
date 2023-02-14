@@ -26,7 +26,7 @@ Ensure following packages are installed.
 
 ```{r}
 #| echo: true
-packages = c('tidyverse','knitr', 'scales','sf', 'tmap', 'highcharter', 'plotly','ggstatsplot','lubridate','ggridges','ggrepel')
+packages = c('tidyverse','knitr', 'scales','sf', 'tmap', 'highcharter', 'plotly','lubridate','ggridges','ggrepel')
 
 for(p in packages){
   if(!require(p, character.only = T)){
@@ -105,7 +105,7 @@ We observe that the overall resale price for HDB resale market is around the sam
 
 ## 4.2 Flat Type Analysis
 
-Next, we plot boxplot by quarter and across flat type to see how prices fluctuated in the last year for different flat types.
+Next, we plot boxplot by quarter and across flat type to see how prices fluctuated in the last year for different flat types. \*\* rework on this based on ANOVA?
 
 ```{r}
 #| echo: true
@@ -114,23 +114,6 @@ SGResale_2022_byflat <- SGResale_2022 %>%
   mutate(quarter = quarter(ym(month)),
          price_per_sqm = resale_price/floor_area_sqm)
 ```
-
-```{r}
-#| echo: true
-
-ggbetweenstats(
-  data = SGResale_2022_byflat,
-  x = flat_type,
-  y = price_per_sqm,
-  type = "np",
-  plot.type = "boxviolin",
-  title = "HDB resale prices in 2022 by flat type",
-  xlab = "Flat type",
-  ylab ="Price per sqm (SGD)")
-
-```
-
-The overall p-value of the ANOVA test between Type of Flat and Resale Price is 0.00 \< 0.05, which suggests that we can reject the null hypotheses. This means that each flat type has a different mean resale price.
 
 ```{r}
 #| echo: true
@@ -173,9 +156,7 @@ SGResale_2022_psqm <- SGResale_2022 %>%
   mutate(price_per_sqm = resale_price/floor_area_sqm)
 ```
 
-We plot the the distribution of price per square metre using rigdeline plot using ggridges package.
-
-We observe that Central area has the highest price but the distribution is scattered. There is a diverse range of housing in the central area, including skyrise apartments and older homes which could be contributing to this distribution. There are two crests in city fringe neighborhoods such as Queenstown and Kallang/Whampoa, which may indicate that the neighborhood is diverse and contains both costly and inexpensive houses. Observing neighborhoods like Choa Chu Kang, Woodlands, and Sembawang with high concentrations of prices at each crest, it is evident that these are predominantly residential neighborhoods. Considering this, we can conclude that residential housing with mixed housing concentration improves affordability.
+We plot the the distribution of price per square metre using rigdeline plot using ggridges package. We observe that Central area has the highest price but the distribution is scattered. There is a diverse range of housing in the central area, including skyrise apartments and older homes which could be contributing to this distribution. There are two crests in city fringe neighborhoods such as Queenstown and Kallang/Whampoa, which may indicate that the neighbourhood is diverse and contains both costly and inexpensive houses. Observing neighborhoods like Choa Chu Kang, Woodlands, and Sembawang with high concentrations of prices at each crest, it is evident that these are predominantly residential neighborhoods. Considering this, we can conclude that residential housing with mixed housing concentration improves affordability.
 
 ```{r}
 #| echo: true
@@ -279,9 +260,63 @@ ggplot(SGResale_2022_bytown, aes(x=reorder(town, price_per_sqm), y=price_per_sqm
 ```
 :::
 
-Overall, we observe that the location and type of HDB flat greatly influences the resale price of the property. This is likely because HDB flats in certain parts of the city are more sought-after due to their proximity to amenities and other factors, while certain types of flats may be more desirable due to their size or layout. This is why prospective buyers should consider all these factors carefully before making a purchase.
+## 4.4 Other features
 
-# 5. References
+Next, we look at the other features to see if they Load ggrepel as package
+
+```{r}
+#| echo: true
+SGResale_2022_byhousingage <- as.data.frame(table(SGResale_2022$town))
+
+SGResale_2022 %>% 
+  group_by(town) %>% 
+  # Calculate housing age
+  mutate(housing_age = 2021 - lease_commence_date) %>% 
+  summarise(average_price = mean(resale_price), average_housing_age = mean(housing_age)) %>% 
+  bind_cols(volume = SGResale_2022_byhousingage$Freq) %>% 
+  ggplot(mapping = aes(x=average_housing_age, y=average_price)) +
+  geom_count(aes(size = volume, color = volume), alpha = 0.7) +
+  # Change size of count points
+  scale_size_area(max_size = 18) +
+  # Add lables next to count points
+  geom_text_repel(aes(label = town),size = 2.7) +
+  scale_y_continuous(labels = comma, limits = c(330000, 730000)) +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  scale_color_viridis_c(option = "C") +
+  labs(title = "HDB Resale flat features by neighborhood", x = "Housing age", y = "Resale price (SGD)", 
+       color = "Resale volume", size = "Resale volume", caption = "Source of data: Singapore Housing and Development Board")  
+  
+```
+
+Visualize whether higher storey HDB commands a higher price in an interactive heatmap
+
+```{r}
+#| echo: true
+SGResale_2022_bystorey <- SGResale_2022 %>%
+  group_by(town, storey_range) %>% 
+  summarise(Mean_Resale_Price = mean(resale_price))
+```
+
+First, based on the heatmap, it is generally true that higher storey units commands a better price, as illustrated from the darker colours on higher storey.
+
+However, if you stay in unpopular towns such as Woodlands, Sembawang, Choa Chu Kang, Jurong West, Pasir Ris, Punggol and Hougang, there is not much differentiation in price even for higher storey units. This is probably because these town are at the edges of Singapore. It is extremely inconvenient to commute from those areas to town. Therefore, there is less demand for those flats resulting in a lower price.
+
+Finally, from the heatmap, it is observed that flats in Bukit Timah is relatively low rised compared to other towns. The highest storey in Bukit Timah is only 15. This is probably because Bukit Timah is known as an exclusive area with many Bungalows and Terraces houses. Therefore, to maintain its "prestige", the urban planning ministry might have intentionally kept HDB storey at Bukit Timah low too.
+
+```{r}
+#| echo: true
+ggplot(data = SGResale_2022_bystorey, 
+                  mapping = aes(x = town, y = storey_range,fill = Mean_Resale_Price)) +
+            geom_tile() +
+  labs(title = "Heatmap of HDB breakdown by area and storey", x = "Town", y = "Storey") +
+  scale_fill_gradient(name = "Mean Resale Price",
+                      low = 'azure',
+                      high = 'cadetblue4')+
+  theme(axis.text.x = element_text(angle = 45))
+```
+
+# 4. References
 
 *Share of households in condos, apartments up almost 5 percentage points as proportion in HDB flats slips 3.7 points: census*. Business times. (2021, June 19). Retrieved February 13, 2023, from https://www.businesstimes.com.sg/singapore/economy-policy/share-households-condos-apartments-almost-5-percentage-points-proportion
 
