@@ -230,8 +230,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#time-analysis" id="toc-time-analysis" class="nav-link" data-scroll-target="#time-analysis">4.1 Time Analysis</a></li>
   <li><a href="#flat-type-analysis" id="toc-flat-type-analysis" class="nav-link" data-scroll-target="#flat-type-analysis">4.2 Flat Type Analysis</a></li>
   <li><a href="#geographical-analysis" id="toc-geographical-analysis" class="nav-link" data-scroll-target="#geographical-analysis">4.3 Geographical Analysis</a></li>
+  <li><a href="#other-features" id="toc-other-features" class="nav-link" data-scroll-target="#other-features">4.4 Other features</a></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">5. References</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">4. References</a></li>
   </ul>
 </nav>
     </div>
@@ -278,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>3. Data Preparation</h1>
 <p>Ensure following packages are installed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'tidyverse'</span>,<span class="st">'knitr'</span>, <span class="st">'scales'</span>,<span class="st">'sf'</span>, <span class="st">'tmap'</span>, <span class="st">'highcharter'</span>, <span class="st">'plotly'</span>,<span class="st">'ggstatsplot'</span>,<span class="st">'lubridate'</span>,<span class="st">'ggridges'</span>,<span class="st">'ggrepel'</span>)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'tidyverse'</span>,<span class="st">'knitr'</span>, <span class="st">'scales'</span>,<span class="st">'sf'</span>, <span class="st">'tmap'</span>, <span class="st">'highcharter'</span>, <span class="st">'plotly'</span>,<span class="st">'lubridate'</span>,<span class="st">'ggridges'</span>,<span class="st">'ggrepel'</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> packages){</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(p, <span class="at">character.only =</span> T)){</span>
@@ -328,6 +329,10 @@ Registered S3 method overwritten by 'quantmod':
   method            from
   as.zoo.data.frame zoo 
 
+Highcharts (www.highcharts.com) is a Highsoft software product which is
+
+not free for commercial and Governmental use
+
 Loading required package: plotly
 
 
@@ -348,12 +353,6 @@ The following object is masked from 'package:graphics':
 
     layout
 
-
-Loading required package: ggstatsplot
-
-You can cite this package as:
-     Patil, I. (2021). Visualizations with statistical details: The 'ggstatsplot' approach.
-     Journal of Open Source Software, 6(61), 3167, doi:10.21105/joss.03167
 
 Loading required package: lubridate
 
@@ -433,14 +432,14 @@ dbl (3): floor_area_sqm, lease_commence_date, resale_price
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HDB resale market in Year 2022"</span>, <span class="at">y=</span><span class="st">"Resale volume"</span>, </span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Month"</span>, <span class="at">caption =</span> <span class="st">"Source of data: Singapore Housing and Development Board"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex03_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We observe that the overall resale price for HDB resale market is around the same throughout 2022. However, there was a huge spike in Sept and dropped further in Oct.&nbsp;This may be due to the cooling measure announced by the government which took immediate effect on 30 September 2022.</p>
 </section>
 <section id="flat-type-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="flat-type-analysis">4.2 Flat Type Analysis</h2>
-<p>Next, we plot boxplot by quarter and across flat type to see how prices fluctuated in the last year for different flat types.</p>
+<p>Next, we plot boxplot by quarter and across flat type to see how prices fluctuated in the last year for different flat types. ** rework on this based on ANOVA?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SGResale_2022_byflat <span class="ot">&lt;-</span> SGResale_2022 <span class="sc">%&gt;%</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(flat_type) <span class="sc">%&gt;%</span> </span>
@@ -448,47 +447,32 @@ dbl (3): floor_area_sqm, lease_commence_date, resale_price
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">price_per_sqm =</span> resale_price<span class="sc">/</span>floor_area_sqm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> SGResale_2022_byflat,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> flat_type,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> price_per_sqm,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"np"</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.type =</span> <span class="st">"boxviolin"</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"HDB resale prices in 2022 by flat type"</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Flat type"</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span><span class="st">"Price per sqm (SGD)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> SGResale_2022_byflat, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> flat_type, <span class="at">y =</span> price_per_sqm)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_boxplot</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"A"</span>) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust lables and add title</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HDB resale prices in 2022 by flat type"</span>, <span class="at">y=</span><span class="st">"Price per square metre (SGD)"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Flat type"</span>, <span class="at">caption =</span> <span class="st">"Source of data: Singapore Housing and Development Board"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex03_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The overall p-value of the ANOVA test between Type of Flat and Resale Price is 0.00 &lt; 0.05, which suggests that we can reject the null hypotheses. This means that each flat type has a different mean resale price.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> SGResale_2022_byflat, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> flat_type, <span class="at">y =</span> price_per_sqm)) <span class="sc">+</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_boxplot</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"A"</span>) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust lables and add title</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HDB resale prices in 2022 by flat type"</span>, <span class="at">y=</span><span class="st">"Price per square metre (SGD)"</span>,</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Flat type"</span>, <span class="at">caption =</span> <span class="st">"Source of data: Singapore Housing and Development Board"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Take-Home_Ex03_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We observe that the price per square metre for 5 Room is the lowest. Interestingly, 4 Room and 3 Room price per square metre are comparable with 4 Room slightly higher. However, this could be due to many outliers with extremely high prices per square metre in 4 Room.</p>
 <p>To analyze further into time, we use lubridate package to transform month into quarters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> SGResale_2022_byflat, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> flat_type, <span class="at">y =</span> price_per_sqm)) <span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Make grouped boxplot</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">as.factor</span>(quarter)), <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"D"</span>) <span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust lables and add title</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HDB resale prices in 2022 by flat type"</span>, <span class="at">y=</span><span class="st">"Price per square metre (SGD)"</span>, <span class="at">fill =</span> <span class="st">"Quarter"</span>,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Flat type"</span>, <span class="at">caption =</span> <span class="st">"Source of data: Singapore Housing and Development Board "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> SGResale_2022_byflat, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> flat_type, <span class="at">y =</span> price_per_sqm)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Make grouped boxplot</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">as.factor</span>(quarter)), <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"D"</span>) <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust lables and add title</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HDB resale prices in 2022 by flat type"</span>, <span class="at">y=</span><span class="st">"Price per square metre (SGD)"</span>, <span class="at">fill =</span> <span class="st">"Quarter"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Flat type"</span>, <span class="at">caption =</span> <span class="st">"Source of data: Singapore Housing and Development Board "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex03_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Here we observe that in all flat types, the average price per square metre increases from Q1 to Q4.</p>
@@ -497,33 +481,32 @@ dbl (3): floor_area_sqm, lease_commence_date, resale_price
 <h2 class="anchored" data-anchor-id="geographical-analysis">4.3 Geographical Analysis</h2>
 <p>Next, we will group the dataset by town to find if the geographical effects of the flat’s location on its resale price.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SGResale_2022_psqm <span class="ot">&lt;-</span> SGResale_2022 <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">price_per_sqm =</span> resale_price<span class="sc">/</span>floor_area_sqm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>SGResale_2022_psqm <span class="ot">&lt;-</span> SGResale_2022 <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">price_per_sqm =</span> resale_price<span class="sc">/</span>floor_area_sqm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We plot the the distribution of price per square metre using rigdeline plot using ggridges package.</p>
-<p>We observe that Central area has the highest price but the distribution is scattered. There is a diverse range of housing in the central area, including skyrise apartments and older homes which could be contributing to this distribution. There are two crests in city fringe neighborhoods such as Queenstown and Kallang/Whampoa, which may indicate that the neighborhood is diverse and contains both costly and inexpensive houses. Observing neighborhoods like Choa Chu Kang, Woodlands, and Sembawang with high concentrations of prices at each crest, it is evident that these are predominantly residential neighborhoods. Considering this, we can conclude that residential housing with mixed housing concentration improves affordability.</p>
+<p>We plot the the distribution of price per square metre using rigdeline plot using ggridges package. We observe that Central area has the highest price but the distribution is scattered. There is a diverse range of housing in the central area, including skyrise apartments and older homes which could be contributing to this distribution. There are two crests in city fringe neighborhoods such as Queenstown and Kallang/Whampoa, which may indicate that the neighbourhood is diverse and contains both costly and inexpensive houses. Observing neighborhoods like Choa Chu Kang, Woodlands, and Sembawang with high concentrations of prices at each crest, it is evident that these are predominantly residential neighborhoods. Considering this, we can conclude that residential housing with mixed housing concentration improves affordability.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>SGResale_2022_bytown <span class="ot">&lt;-</span> SGResale_2022_psqm <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(town)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the neighborhoods in an ascending order of price per sqm</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> SGResale_2022_bytown, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> price_per_sqm, <span class="at">y =</span> <span class="fu">reorder</span>(<span class="fu">as.factor</span>(town),<span class="sc">-</span>price_per_sqm),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> <span class="fu">after_stat</span>(x)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                       )) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges_gradient</span>(<span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"C"</span>) <span class="sc">+</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove legend, grid line add title</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HDB resale prices in 2022 by neighborhood"</span>, <span class="at">x =</span> <span class="st">"Price per square metre (SGD)"</span>, <span class="at">y =</span> <span class="st">""</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Neighborhood exhibit large differences"</span>,</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data: Housing and Development Board, Singapore"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SGResale_2022_bytown <span class="ot">&lt;-</span> SGResale_2022_psqm <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(town)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the neighborhoods in an ascending order of price per sqm</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> SGResale_2022_bytown, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> price_per_sqm, <span class="at">y =</span> <span class="fu">reorder</span>(<span class="fu">as.factor</span>(town),<span class="sc">-</span>price_per_sqm),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> <span class="fu">after_stat</span>(x)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                       )) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges_gradient</span>(<span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"C"</span>) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove legend, grid line add title</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HDB resale prices in 2022 by neighborhood"</span>, <span class="at">x =</span> <span class="st">"Price per square metre (SGD)"</span>, <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Neighborhood exhibit large differences"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data: Housing and Development Board, Singapore"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Picking joint bandwidth of 247</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex03_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We drill further into each neighborhood by flat types to see if location had a great effect on flat resale prices. Generally, central area had the most expensive flats by mean price per square meter, followed by Queenstown and Kallang/Whampoa in 2022. This was also observed in 4 Room &amp; 5 Room, the reason could be that these location are in close proximity to the city centre, hence are more expensive especially for those who value connectivity and easy access to the Central Business District (CBD).</p>
@@ -533,26 +516,46 @@ dbl (3): floor_area_sqm, lease_commence_date, resale_price
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>SGResale_2022_bytown <span class="ot">&lt;-</span> SGResale_2022_psqm <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(town)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SGResale_2022_bytown, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(town, price_per_sqm), <span class="at">y=</span>price_per_sqm)) <span class="sc">+</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Average Flat Resale Price (psm) by Town for all room types in 2022 "</span>, </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Town"</span>, </span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Resale Price ($ psm)"</span>) <span class="sc">+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>, <span class="at">hjust=</span><span class="fl">0.5</span>),</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">35</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>SGResale_2022_bytown <span class="ot">&lt;-</span> SGResale_2022_psqm <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(town)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SGResale_2022_bytown, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(town, price_per_sqm), <span class="at">y=</span>price_per_sqm)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Average Flat Resale Price (psm) by Town for all room types in 2022 "</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Town"</span>, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Resale Price ($ psm)"</span>) <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>, <span class="at">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">35</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex03_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> <span class="st">"3 ROOM"</span></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> <span class="st">"3 ROOM"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>SGResale_2022_bytown <span class="ot">&lt;-</span> SGResale_2022_psqm <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(town) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(flat_type<span class="sc">==</span>type)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SGResale_2022_bytown, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(town, price_per_sqm), <span class="at">y=</span>price_per_sqm)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">"Average Flat Resale Price (psm) by Town for"</span>, <span class="fu">str_replace</span>(<span class="fu">lapply</span>(type, tolower), <span class="st">'_'</span>, <span class="st">'-'</span>), <span class="st">"flats"</span>), </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Town"</span>, </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Resale Price ($ psm)"</span>) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>, <span class="at">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">35</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> <span class="st">"4 ROOM"</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>SGResale_2022_bytown <span class="ot">&lt;-</span> SGResale_2022_psqm <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(town) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(flat_type<span class="sc">==</span>type)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SGResale_2022_bytown, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(town, price_per_sqm), <span class="at">y=</span>price_per_sqm)) <span class="sc">+</span></span>
@@ -564,15 +567,15 @@ dbl (3): floor_area_sqm, lease_commence_date, resale_price
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>, <span class="at">hjust=</span><span class="fl">0.5</span>),</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">35</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex03_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> <span class="st">"4 ROOM"</span></span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> <span class="st">"5 ROOM"</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>SGResale_2022_bytown <span class="ot">&lt;-</span> SGResale_2022_psqm <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(town) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(flat_type<span class="sc">==</span>type)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SGResale_2022_bytown, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(town, price_per_sqm), <span class="at">y=</span>price_per_sqm)) <span class="sc">+</span></span>
@@ -586,37 +589,71 @@ dbl (3): floor_area_sqm, lease_commence_date, resale_price
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">35</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex03_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
-<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+</div>
+</div>
+</section>
+<section id="other-features" class="level2">
+<h2 class="anchored" data-anchor-id="other-features">4.4 Other features</h2>
+<p>Next, we look at the other features to see if they Load ggrepel as package</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> <span class="st">"5 ROOM"</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>SGResale_2022_bytown <span class="ot">&lt;-</span> SGResale_2022_psqm <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(town) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(flat_type<span class="sc">==</span>type)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SGResale_2022_bytown, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(town, price_per_sqm), <span class="at">y=</span>price_per_sqm)) <span class="sc">+</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">"Average Flat Resale Price (psm) by Town for"</span>, <span class="fu">str_replace</span>(<span class="fu">lapply</span>(type, tolower), <span class="st">'_'</span>, <span class="st">'-'</span>), <span class="st">"flats"</span>), </span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Town"</span>, </span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Resale Price ($ psm)"</span>) <span class="sc">+</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>, <span class="at">hjust=</span><span class="fl">0.5</span>),</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">35</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>SGResale_2022_byhousingage <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">table</span>(SGResale_2022<span class="sc">$</span>town))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>SGResale_2022 <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(town) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate housing age</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">housing_age =</span> <span class="dv">2021</span> <span class="sc">-</span> lease_commence_date) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_price =</span> <span class="fu">mean</span>(resale_price), <span class="at">average_housing_age =</span> <span class="fu">mean</span>(housing_age)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="at">volume =</span> SGResale_2022_byhousingage<span class="sc">$</span>Freq) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>average_housing_age, <span class="at">y=</span>average_price)) <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(<span class="fu">aes</span>(<span class="at">size =</span> volume, <span class="at">color =</span> volume), <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Change size of count points</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add lables next to count points</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> town),<span class="at">size =</span> <span class="fl">2.7</span>) <span class="sc">+</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">330000</span>, <span class="dv">730000</span>)) <span class="sc">+</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">"C"</span>) <span class="sc">+</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"HDB Resale flat features by neighborhood"</span>, <span class="at">x =</span> <span class="st">"Housing age"</span>, <span class="at">y =</span> <span class="st">"Resale price (SGD)"</span>, </span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Resale volume"</span>, <span class="at">size =</span> <span class="st">"Resale volume"</span>, <span class="at">caption =</span> <span class="st">"Source of data: Singapore Housing and Development Board"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Take-Home_Ex03_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Visualize whether higher storey HDB commands a higher price in an interactive heatmap</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>SGResale_2022_bystorey <span class="ot">&lt;-</span> SGResale_2022 <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(town, storey_range) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Mean_Resale_Price =</span> <span class="fu">mean</span>(resale_price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'town'. You can override using the
+`.groups` argument.</code></pre>
 </div>
 </div>
+<p>First, based on the heatmap, it is generally true that higher storey units commands a better price, as illustrated from the darker colours on higher storey.</p>
+<p>However, if you stay in unpopular towns such as Woodlands, Sembawang, Choa Chu Kang, Jurong West, Pasir Ris, Punggol and Hougang, there is not much differentiation in price even for higher storey units. This is probably because these town are at the edges of Singapore. It is extremely inconvenient to commute from those areas to town. Therefore, there is less demand for those flats resulting in a lower price.</p>
+<p>Finally, from the heatmap, it is observed that flats in Bukit Timah is relatively low rised compared to other towns. The highest storey in Bukit Timah is only 15. This is probably because Bukit Timah is known as an exclusive area with many Bungalows and Terraces houses. Therefore, to maintain its “prestige”, the urban planning ministry might have intentionally kept HDB storey at Bukit Timah low too.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> SGResale_2022_bystorey, </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> town, <span class="at">y =</span> storey_range,<span class="at">fill =</span> Mean_Resale_Price)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Heatmap of HDB breakdown by area and storey"</span>, <span class="at">x =</span> <span class="st">"Town"</span>, <span class="at">y =</span> <span class="st">"Storey"</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">"Mean Resale Price"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">low =</span> <span class="st">'azure'</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">high =</span> <span class="st">'cadetblue4'</span>)<span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Take-Home_Ex03_v1_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
-<p>Overall, we observe that the location and type of HDB flat greatly influences the resale price of the property. This is likely because HDB flats in certain parts of the city are more sought-after due to their proximity to amenities and other factors, while certain types of flats may be more desirable due to their size or layout. This is why prospective buyers should consider all these factors carefully before making a purchase.</p>
+</div>
 </section>
 </section>
 <section id="references" class="level1">
-<h1>5. References</h1>
+<h1>4. References</h1>
 <p><em>Share of households in condos, apartments up almost 5 percentage points as proportion in HDB flats slips 3.7 points: census</em>. Business times. (2021, June 19). Retrieved February 13, 2023, from https://www.businesstimes.com.sg/singapore/economy-policy/share-households-condos-apartments-almost-5-percentage-points-proportion</p>
 <p>Koo, A. (2022, October 3). <em>New property cooling measures in 2022 and the HDB buyers, downgraders &amp; upgraders who could be affected by the latest changes</em>. DollarsAndSense.sg. Retrieved February 14, 2023, from https://dollarsandsense.sg/new-property-cooling-measures-2022/</p>
 <p><em>HDB resale prices Q3 2022: Singapore Estates ranked from most expensive ...</em> (2022, October 31). Retrieved February 14, 2023, from https://www.propertyguru.com.sg/property-guides/pgf-hdb-resale-flat-estates-price-most-expensive-cheapest-55414</p>

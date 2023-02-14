@@ -26,6 +26,7 @@ Ensure following packages are installed.
 
 ```{r}
 #| echo: true
+#| output: false
 packages = c('tidyverse','knitr', 'scales','sf', 'tmap', 'highcharter', 'plotly','ggstatsplot','lubridate','ggridges','ggrepel')
 
 for(p in packages){
@@ -41,6 +42,7 @@ First, we use the read_csv() function of the readr package to import *Resale fla
 
 ```{r}
 #| echo: true
+#| output: false
 SGResale_2022 <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv")
 ```
 
@@ -130,7 +132,7 @@ ggbetweenstats(
 
 ```
 
-The overall p-value of the ANOVA test between Type of Flat and Resale Price is 0.00 \< 0.05, which suggests that we can reject the null hypotheses. This means that each flat type has a different mean resale price.
+The overall p-value of the ANOVA test between Type of Flat and Resale Price per sqm is 0.00 \< 0.05, which suggests that we can reject the null hypotheses. This means that each flat type has a different mean resale price.
 
 ```{r}
 #| echo: true
