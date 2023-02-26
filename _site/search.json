@@ -173,5 +173,68 @@
     "title": "Take-home Exercise 3",
     "section": "4.4 Other features",
     "text": "4.4 Other features\nNext, we look at the other features to see if they Load ggrepel as package\n\nSGResale_2022_byhousingage <- as.data.frame(table(SGResale_2022$town))\n\nSGResale_2022 %>% \n  group_by(town) %>% \n  # Calculate housing age\n  mutate(housing_age = 2021 - lease_commence_date) %>% \n  summarise(average_price = mean(resale_price), average_housing_age = mean(housing_age)) %>% \n  bind_cols(volume = SGResale_2022_byhousingage$Freq) %>% \n  ggplot(mapping = aes(x=average_housing_age, y=average_price)) +\n  geom_count(aes(size = volume, color = volume), alpha = 0.7) +\n  # Change size of count points\n  scale_size_area(max_size = 18) +\n  # Add lables next to count points\n  geom_text_repel(aes(label = town),size = 2.7) +\n  scale_y_continuous(labels = comma, limits = c(330000, 730000)) +\n  theme_minimal() +\n  theme(legend.position = \"top\") +\n  scale_color_viridis_c(option = \"C\") +\n  labs(title = \"HDB Resale flat features by neighborhood\", x = \"Housing age\", y = \"Resale price (SGD)\", \n       color = \"Resale volume\", size = \"Resale volume\", caption = \"Source of data: Singapore Housing and Development Board\")  \n\n\n\n\nVisualize whether higher storey HDB commands a higher price in an interactive heatmap\n\nSGResale_2022_bystorey <- SGResale_2022 %>%\n  group_by(town, storey_range) %>% \n  summarise(Mean_Resale_Price = mean(resale_price))\n\n`summarise()` has grouped output by 'town'. You can override using the\n`.groups` argument.\n\n\nFirst, based on the heatmap, it is generally true that higher storey units commands a better price, as illustrated from the darker colours on higher storey.\nHowever, if you stay in unpopular towns such as Woodlands, Sembawang, Choa Chu Kang, Jurong West, Pasir Ris, Punggol and Hougang, there is not much differentiation in price even for higher storey units. This is probably because these town are at the edges of Singapore. It is extremely inconvenient to commute from those areas to town. Therefore, there is less demand for those flats resulting in a lower price.\nFinally, from the heatmap, it is observed that flats in Bukit Timah is relatively low rised compared to other towns. The highest storey in Bukit Timah is only 15. This is probably because Bukit Timah is known as an exclusive area with many Bungalows and Terraces houses. Therefore, to maintain its “prestige”, the urban planning ministry might have intentionally kept HDB storey at Bukit Timah low too.\n\nggplot(data = SGResale_2022_bystorey, \n                  mapping = aes(x = town, y = storey_range,fill = Mean_Resale_Price)) +\n            geom_tile() +\n  labs(title = \"Heatmap of HDB breakdown by area and storey\", x = \"Town\", y = \"Storey\") +\n  scale_fill_gradient(name = \"Mean Resale Price\",\n                      low = 'azure',\n                      high = 'cadetblue4')+\n  theme(axis.text.x = element_text(angle = 45))"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html",
+    "href": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html",
+    "title": "Take-home Exercise 4",
+    "section": "",
+    "text": "With the help of analysis visualisation techniques, we are to uncover the impact of COVID-19 and the global economic and political dynamics of 2022 on Singapore’s bi-lateral trade (i.e. import, export and trade balance)."
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#heatmap",
+    "href": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#heatmap",
+    "title": "Take-home Exercise 4",
+    "section": "4.1 Heatmap",
+    "text": "4.1 Heatmap"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#trade-balance-of-singapore",
+    "href": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#trade-balance-of-singapore",
+    "title": "Take-home Exercise 4",
+    "section": "4.3 Trade Balance of Singapore",
+    "text": "4.3 Trade Balance of Singapore\n::: panel-tabset"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#asia-1",
+    "href": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#asia-1",
+    "title": "Take-home Exercise 4",
+    "section": "Asia",
+    "text": "Asia\n\n\nWarning: Using the `size` aesthetic in this geom was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` in the `default_aes` field and elsewhere instead."
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#america-1",
+    "href": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#america-1",
+    "title": "Take-home Exercise 4",
+    "section": "America",
+    "text": "America"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#europe-1",
+    "href": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#europe-1",
+    "title": "Take-home Exercise 4",
+    "section": "Europe",
+    "text": "Europe"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#oceania-1",
+    "href": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#oceania-1",
+    "title": "Take-home Exercise 4",
+    "section": "Oceania",
+    "text": "Oceania"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#export-import-graphs",
+    "href": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#export-import-graphs",
+    "title": "Take-home Exercise 4",
+    "section": "4.2 Export-Import Graphs",
+    "text": "4.2 Export-Import Graphs\n\nOverallAsiaAmericaEuropeOceania\n\n\n\n\n`geom_braid()` using method = 'line'\n\n\n\n\n\n\n\n\n\n`geom_braid()` using method = 'line'\n\n\n\n\n\n\n\n\n\n`geom_braid()` using method = 'line'\n\n\n\n\n\n\n\n\n\n`geom_braid()` using method = 'line'\n\n\n\n\n\n\n\n\n\n`geom_braid()` using method = 'line'"
+  },
+  {
+    "objectID": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#slopegraph-4",
+    "href": "Take-Home_Ex/Take-Home_Ex04/Take-Home_Ex04.html#slopegraph-4",
+    "title": "Take-home Exercise 4",
+    "section": "4.3 SlopeGraph",
+    "text": "4.3 SlopeGraph\n\nAsiaAmericaEuropeOceania"
   }
 ]
