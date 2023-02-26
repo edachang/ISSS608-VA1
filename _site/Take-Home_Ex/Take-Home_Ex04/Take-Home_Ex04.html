@@ -233,10 +233,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap">4.1 Heatmap</a></li>
   <li><a href="#trade-balance-of-singapore" id="toc-trade-balance-of-singapore" class="nav-link" data-scroll-target="#trade-balance-of-singapore">4.2 Trade Balance of Singapore</a></li>
-  <li><a href="#asia-1" id="toc-asia-1" class="nav-link" data-scroll-target="#asia-1">Asia</a></li>
-  <li><a href="#america-1" id="toc-america-1" class="nav-link" data-scroll-target="#america-1">America</a></li>
-  <li><a href="#europe-1" id="toc-europe-1" class="nav-link" data-scroll-target="#europe-1">Europe</a></li>
-  <li><a href="#oceania-1" id="toc-oceania-1" class="nav-link" data-scroll-target="#oceania-1">Oceania</a></li>
   <li><a href="#export-import-graphs" id="toc-export-import-graphs" class="nav-link" data-scroll-target="#export-import-graphs">4.3 Export-Import Graphs</a></li>
   <li><a href="#slopegraph-4" id="toc-slopegraph-4" class="nav-link" data-scroll-target="#slopegraph-4">4.3 SlopeGraph</a></li>
   </ul></li>
@@ -1140,10 +1136,10 @@ the `.groups` argument.</code></pre>
 <li><p>We mostly export to countries in Oceania.</p></li>
 </ul>
 <p>What is noteworthy about this analysis is that we observe&nbsp;that we often export to smaller countries while importing from larger countries. This could be due to Singapore’s many bilateral and regional FTAs including with Australia, China, Costa Rica, India, Japan, Jordan, New Zealand, Republic of Korea, Panama, Peru, Sri Lanka, European Union, United Kingdom and Turkey.</p>
-<p>::: panel-tabset</p>
-</section>
-<section id="asia-1" class="level2">
-<h2 class="anchored" data-anchor-id="asia-1">Asia</h2>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Asia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">America</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Europe</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">Oceania</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using the `size` aesthetic in this geom was deprecated in ggplot2 3.4.0.
@@ -1157,9 +1153,8 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="america-1" class="level2">
-<h2 class="anchored" data-anchor-id="america-1">America</h2>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1169,9 +1164,8 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="europe-1" class="level2">
-<h2 class="anchored" data-anchor-id="europe-1">Europe</h2>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1181,9 +1175,8 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="oceania-1" class="level2">
-<h2 class="anchored" data-anchor-id="oceania-1">Oceania</h2>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1211,6 +1204,9 @@ the `.groups` argument.</code></pre>
 <p><img src="Take-Home_Ex04_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</div>
+</div>
+</div>
 </section>
 <section id="export-import-graphs" class="level2">
 <h2 class="anchored" data-anchor-id="export-import-graphs">4.3 Export-Import Graphs</h2>
@@ -1219,9 +1215,9 @@ the `.groups` argument.</code></pre>
 <p>Singapore has experienced a trade surplus for the last three years, as shown in the green region, which is more than the purple area. The result is consistent with the trade summary from <a href="https://wits.worldbank.org/CountrySnapshot/en/SGP/textview#:~:text=Singapore%2C%20Imports%20of%20goods%20and,percentage%20of%20GDP%20is%20176.24%20%25.">World Bank.org</a>. This was also evident in the heatmap, which showed a low trade balance in May 2022. Trade activity falls sharply between February 2020 and December 2021. The drop in February 2020 was caused by Covid-19 shutdown restrictions and a standstill in global economic activity, during which the Singapore economy experienced both demand- and supply-side disruptions. Whereas the second drop in trade activity in December 2021 could be related to the uncertainty of Russia invading Ukraine. The decrease continued&nbsp;until February 2022, when the Russia-Ukraine war begin. On the other hand, imports and exports increased&nbsp;in March 2021 which could be due to easing of Covid restrictions.</p>
 <p>Similar patterns can be found in different regions, as evidenced by the Trade Balance, where trade activity are lower in countries in America and higher in Asia. It’s worth noting that several countries had a mix of trade surpluses and trade deficits (e.g.&nbsp;Korea, China, US). For example, exports to China increased from July 2020 to April 2022, which might be linked to the pandemic and China’s strict zero covid policy, which delayed China’s opening and consequently lowered imports.</p>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Overall</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Asia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">America</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">Europe</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false">Oceania</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Overall</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Asia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">America</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false">Europe</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-5" role="tab" aria-controls="tabset-3-5" aria-selected="false">Oceania</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1297,7 +1293,7 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1363,7 +1359,7 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1429,7 +1425,7 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1495,7 +1491,7 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
+<div id="tabset-3-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-5-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1572,9 +1568,9 @@ the `.groups` argument.</code></pre>
 <p>In Europe, most countries seems to be quite stable across the years and with more countries with trade deficit, this could be due to the ongoing European Union-Singapore Free Trade Agreement and the hit in resources from Russia-Ukraine war which meant more imports from Singapore.</p>
 <p>In Oceania, it is interesting to see that we are exporting more to Australia &amp; New Zealand over the years.</p>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Asia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">America</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Europe</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false">Oceania</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Asia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">America</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Europe</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false">Oceania</a></li></ul>
 <div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1589,7 +1585,7 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1604,7 +1600,7 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1619,7 +1615,7 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
