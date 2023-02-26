@@ -737,7 +737,6 @@ We can examine the main importers/exporters and trading activities of trading pa
 What is noteworthy about this analysis is that we observe that we often export to smaller countries while importing from larger countries. This could be due to Singapore's many bilateral and regional FTAs including with Australia, China, Costa Rica, India, Japan, Jordan, New Zealand, Republic of Korea, Panama, Peru, Sri Lanka, European Union, United Kingdom and Turkey.
 
 ::: panel-tabset
-
 ## Asia
 
 ```{r fig.align="center", echo = FALSE, fig.width= 20, fig.height=15}
@@ -853,6 +852,7 @@ ggplot(data=totalsgtrade_oceania_tradebalance) +
 
 
 ```
+:::
 
 ## 4.3 Export-Import Graphs
 
