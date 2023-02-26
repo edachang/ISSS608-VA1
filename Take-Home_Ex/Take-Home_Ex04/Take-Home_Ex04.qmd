@@ -5,10 +5,7 @@ author: "Eda Chang"
 format:
   html:
     code-fold: true
-    code-tools: true
-
-execute:
-  echo: false
+    code-summary: "Show the code"
 ---
 
 # The task
@@ -34,14 +31,16 @@ The study period will be from **January 2020 to December 2022** for the purposes
 Ensure following packages are installed.
 
 ```{r}
-#| echo: true
+#| code-fold: true
+#| code-summary: "Show the code"
 
 # install.packages("remotes")
 remotes::install_github("nsgrantham/ggbraid")
 ```
 
 ```{r}
-#| echo: true
+#| code-fold: true
+#| code-summary: "Show the code"
 
 packages = c('readxl', 'tidyr', 'lubridate','tidyverse', 'plotly', 'ggbraid','ggplot2','ggHoriPlot','directlabels')
 for(p in packages){
@@ -62,10 +61,12 @@ First, we use the read_csv() function of the readr package to import the followi
 -   Country-Region mapping data
 
 ```{r}
-#| echo: true
-T1 <- read_xlsx("C:/Users/Eda/Desktop/MITB/Y3S1/ISSS608 Visual Analytics and Applications/edachang/ISSS608-VA1/Take-Home_Ex/Take-Home_Ex04/data/outputFile.xlsx", sheet = "T1", range = "A1:AL120")
+#| code-fold: true
+#| code-summary: "Show the code"
 
-T2 <- read_xlsx("C:/Users/Eda/Desktop/MITB/Y3S1/ISSS608 Visual Analytics and Applications/edachang/ISSS608-VA1/Take-Home_Ex/Take-Home_Ex04/data/outputFile.xlsx", sheet = "T2", range = "A1:AL92")
+import_T1 <- read_xlsx("C:/Users/Eda/Desktop/MITB/Y3S1/ISSS608 Visual Analytics and Applications/edachang/ISSS608-VA1/Take-Home_Ex/Take-Home_Ex04/data/outputFile.xlsx", sheet = "T1", range = "A1:AL120")
+
+export_T2 <- read_xlsx("C:/Users/Eda/Desktop/MITB/Y3S1/ISSS608 Visual Analytics and Applications/edachang/ISSS608-VA1/Take-Home_Ex/Take-Home_Ex04/data/outputFile.xlsx", sheet = "T2", range = "A1:AL92")
 
 regions <- read_xlsx("C:/Users/Eda/Desktop/MITB/Y3S1/ISSS608 Visual Analytics and Applications/edachang/ISSS608-VA1/Take-Home_Ex/Take-Home_Ex04/data/countries_region.xlsx")
 
@@ -82,8 +83,10 @@ As we will only be looking at Jan 2020 to Dec 2022, we perform the following fil
 -   Remove 'Data Series' column
 
 ```{r}
-#| echo: true
-sgimport_ctry <- T1 %>% 
+#| code-fold: true
+#| code-summary: "Show the code"
+
+sgimport <- import_T1 %>% 
   
   filter(!row_number() %in% c(1:7)) %>% 
   
@@ -94,7 +97,7 @@ sgimport_ctry <- T1 %>%
   select(-`Data Series`) 
   
 
-sgexport_ctry <- T2 %>% 
+sgexport <- export_T2 %>% 
   
   filter(!row_number() %in% c(1:7)) %>% 
   
@@ -113,44 +116,47 @@ sgexport_ctry <- T2 %>%
 -   Remove Year 2023 to ensure that the dataset runs from **January 2020 to December 2022**
 
 ```{r}
-sgimport_cln <- sgimport_ctry %>% 
+#| code-fold: true
+#| code-summary: "Show the code"
+
+sgimport_pivot <- sgimport %>% 
   
   pivot_longer(cols = !Countries,
                names_to = c("Year", "Month"),
                names_sep = " ",
-               values_to = "Import_SGD"
+               values_to = "ImportSGD"
                ) %>% 
   
   mutate(Month = factor(Month, levels = month.abb),
          Year = as.integer(Year),
-         Month_Year = make_date(Year, Month),
+         MonthYear = make_date(Year, Month),
          .before = 1) %>% 
   
-  mutate(Import_SGD = Import_SGD*1000) 
+  mutate(ImportSGD = ImportSGD*1000) 
 
 
 
-sgexport_cln <- sgexport_ctry %>% 
+sgexport_pivot <- sgexport %>% 
   
   pivot_longer(cols = !Countries,
                names_to = c("Year", "Month"),
                names_sep = " ",
-               values_to = "Export_SGD"
+               values_to = "ExportSGD"
                ) %>% 
   
   mutate(Month = factor(Month, levels = month.abb),
          Year = as.integer(Year),
-         Month_Year = make_date(Year, Month),
+         MonthYear = make_date(Year, Month),
          .before = 1) %>% 
   
-  mutate(Export_SGD = Export_SGD*1000) 
+  mutate(ExportSGD = ExportSGD*1000) 
   
 # Convert ImportValue column to numeric format
-sgimport_cln$'Import_SGD' <- as.numeric(sgimport_cln$'Import_SGD')
-sgexport_cln$'Export_SGD' <- as.numeric(sgexport_cln$'Export_SGD')
+sgimport_pivot$'ImportSGD' <- as.numeric(sgimport_pivot$'ImportSGD')
+sgexport_pivot$'ExportSGD' <- as.numeric(sgexport_pivot$'ExportSGD')
 
-sgimport_cln<-subset(sgimport_cln, Year!="2023")
-sgexport_cln<-subset(sgexport_cln, Year!="2023")
+sgimport_pivot<-subset(sgimport_pivot, Year!="2023")
+sgexport_pivot<-subset(sgexport_pivot, Year!="2023")
 
 ```
 
@@ -165,9 +171,12 @@ sgexport_cln<-subset(sgexport_cln, Year!="2023")
 -   Remove 'Other countries in Oceania' for better comparison across countries instead of aggregated countries in oceania
 
 ```{r}
-sgtrade_cln <- sgimport_cln %>% 
+#| code-fold: true
+#| code-summary: "Show the code"
+
+sgtrade_joined <- sgimport_pivot %>% 
   
-  left_join(sgexport_cln, by = c('Countries' = 'Countries', 'Month_Year' = 'Month_Year', 'Month' = 'Month', 'Year' = 'Year')) %>% 
+  left_join(sgexport_pivot, by = c('Countries' = 'Countries', 'MonthYear' = 'MonthYear', 'Month' = 'Month', 'Year' = 'Year')) %>% 
   
   mutate(Countries = case_when(Countries == "Germany, Federal Republic Of" ~ "Germany",
                                Countries == "Vietnam, Socialist Republic Of" ~ "Vietnam",
@@ -183,13 +192,13 @@ sgtrade_cln <- sgimport_cln %>%
                                Countries == "Yemen Democratic" ~ "Yemen",
                                TRUE ~ Countries)) %>% 
   
-  mutate(Trade_Balance_SGD = Export_SGD - Import_SGD,
-         Trade_Volumes_SGD = Export_SGD + Import_SGD) 
+  mutate(TradeBalance_SGD = ExportSGD - ImportSGD,
+         TradeVolume_SGD = ExportSGD + ImportSGD) 
 
 
-sgtrade_cln <- sgtrade_cln %>% drop_na(Trade_Balance_SGD)
+sgtrade_joined <- sgtrade_joined %>% drop_na(TradeBalance_SGD)
 
-sgtrade_cln<-subset(sgtrade_cln, Countries!="Other Countries In Oceania")
+sgtrade_joined<-subset(sgtrade_joined, Countries!="Other Countries In Oceania")
 ```
 
 -   Group by Month & Year across all countries
@@ -197,13 +206,16 @@ sgtrade_cln<-subset(sgtrade_cln, Countries!="Other Countries In Oceania")
 -   Transpose Export & Import into one column
 
 ```{r}
-totalsgtrade <- sgtrade_cln %>% 
-  group_by(Month_Year, Year) %>% 
-  summarise(Import = sum(Import_SGD),
-            Export = sum(Export_SGD))
+#| code-fold: true
+#| code-summary: "Show the code"
 
-totalsgtrade_long <- totalsgtrade %>% 
-  pivot_longer(cols = !c(Month_Year, Year),
+totalsgtrade <- sgtrade_joined %>% 
+  group_by(MonthYear, Year) %>% 
+  summarise(Import = sum(ImportSGD),
+            Export = sum(ExportSGD))
+
+totalsgtrade_pivot <- totalsgtrade %>% 
+  pivot_longer(cols = !c(MonthYear, Year),
                names_to = "Type",
                values_to = "Values")
 
@@ -212,15 +224,17 @@ totalsgtrade_long <- totalsgtrade %>%
 -   Group by Countries & Year across all countries
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-sgtrade_cln_year <- sgtrade_cln %>% 
+sgtrade_joined_countryyear <- sgtrade_joined %>% 
   group_by(Countries, Year) %>% 
-  summarise(Total_Trade_Balance_BSGD = round(sum(Trade_Balance_SGD)/1000000000, 2),
-            Total_Trade_Volumes_BSGD = round(sum(Trade_Volumes_SGD)/1000000000, 2),
-            Total_Import_BSGD = round(sum(Import_SGD)/1000000000, 2),
-            Total_Export_BSGD = round(sum(Export_SGD)/1000000000, 2))
+  summarise(TotalTradeBalance_BSGD = round(sum(TradeBalance_SGD)/1000000000, 2),
+            TotalTradeVolume_BSGD = round(sum(TradeVolume_SGD)/1000000000, 2),
+            TotalImport_BSGD = round(sum(ImportSGD)/1000000000, 2),
+            TotalExport_BSGD = round(sum(ExportSGD)/1000000000, 2))
 
-sgtrade_cln_year$Year <- as.character(sgtrade_cln_year$Year)
+sgtrade_joined_countryyear$Year <- as.character(sgtrade_joined_countryyear$Year)
 
 ```
 
@@ -232,7 +246,10 @@ Find the [top 15 countries]{.underline} for each region
 1.  Left join regions to dataset that was grouped by Countries & Year
 
 ```{r}
-sgtrade_cln_year <- sgtrade_cln_year %>% 
+#| code-fold: true
+#| code-summary: "Show the code"
+
+sgtrade_joined_countryyear <- sgtrade_joined_countryyear %>% 
   left_join(regions, by = c('Countries' = 'Country'))
 
 ```
@@ -240,23 +257,28 @@ sgtrade_cln_year <- sgtrade_cln_year %>%
 2.  Filter region == "Asia"
 
 ```{r}
-sgtrade_cln_year_Asia <- subset(sgtrade_cln_year, Region=="Asia")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+sgtrade_joined_countryyear_Asia <- subset(sgtrade_joined_countryyear, Region=="Asia")
 
 ```
 
 3.  Group by Countries & sum of Total Trade Volumes, sort by sum of Total Trade Volumes before taking the top 15 Countries
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-sgtrade_cln_year_Asia_top15 <- sgtrade_cln_year_Asia %>%
-  select(Countries, Total_Trade_Volumes_BSGD) %>%
+sgtrade_joined_countryyear_Asia_top15 <- sgtrade_joined_countryyear_Asia %>%
+  select(Countries, TotalTradeVolume_BSGD) %>%
   group_by(Countries) %>%
-  summarise(sum_TV = sum(Total_Trade_Volumes_BSGD),
+  summarise(sum_TotalVol = sum(TotalTradeVolume_BSGD),
             .groups = 'drop') %>%
-  arrange(desc(sum_TV)) %>%
+  arrange(desc(sum_TotalVol)) %>%
   slice(0:15)
 
-sgtrade_cln_year_Asia_top15
+sgtrade_joined_countryyear_Asia_top15
 ```
 
 ##### 1. Slopegraph
@@ -264,10 +286,13 @@ sgtrade_cln_year_Asia_top15
 4.  Manually filter 15 countries from previous table
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 top_15_asiacountries <- c("China","Malaysia","Taiwan","Hong Kong","Indonesia","Korea","Japan","Thailand","Vietnam","India","Philippines","United Arab Emirates","Saudi Arabia","Cambodia","Qatar")
 
 
-sgtrade_cln_year_Asia <- sgtrade_cln_year_Asia %>%
+sgtrade_joined_countryyear_Asia <- sgtrade_joined_countryyear_Asia %>%
   filter(Countries %in% top_15_asiacountries)
 
 ```
@@ -277,14 +302,20 @@ sgtrade_cln_year_Asia <- sgtrade_cln_year_Asia %>%
 5.  Left join region to countries
 
 ```{r}
-sgtrade_cln_region <- sgtrade_cln %>% 
+#| code-fold: true
+#| code-summary: "Show the code"
+
+sgtrade_joined_region <- sgtrade_joined %>% 
   left_join(regions, by = c('Countries' = 'Country'))
 ```
 
 6.  Filter all countries in top 15 Asia countries
 
 ```{r}
-totalsgtrade_asia <- subset(sgtrade_cln_region, Region=="Asia")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+totalsgtrade_asia <- subset(sgtrade_joined_region, Region=="Asia")
 totalsgtrade_asia <- totalsgtrade_asia %>%
   filter(Countries %in% top_15_asiacountries)
 ```
@@ -293,13 +324,16 @@ totalsgtrade_asia <- totalsgtrade_asia %>%
 8.  Pivot both import & export column into one
 
 ```{r}
-totalsgtrade_asia <- totalsgtrade_asia %>% 
-  group_by(Month_Year, Year, Countries) %>% 
-  summarise(Import = sum(Import_SGD),
-            Export = sum(Export_SGD))
+#| code-fold: true
+#| code-summary: "Show the code"
 
-totalsgtrade_long_asia <- totalsgtrade_asia %>% 
-  pivot_longer(cols = !c(Month_Year, Year, Countries),
+totalsgtrade_asia <- totalsgtrade_asia %>% 
+  group_by(MonthYear, Year, Countries) %>% 
+  summarise(Import = sum(ImportSGD),
+            Export = sum(ExportSGD))
+
+totalsgtrade_pivot_asia <- totalsgtrade_asia %>% 
+  pivot_longer(cols = !c(MonthYear, Year, Countries),
                names_to = "Type",
                values_to = "Values")
 
@@ -310,7 +344,10 @@ totalsgtrade_long_asia <- totalsgtrade_asia %>%
 9.  Filter only Asia countries in this table
 
 ```{r}
-totalsgtrade_asia_tradebalance <- subset(sgtrade_cln_region, Region=="Asia")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+totalsgtrade_asia_tradebalance <- subset(sgtrade_joined_region, Region=="Asia")
 ```
 
 ## America
@@ -318,23 +355,28 @@ totalsgtrade_asia_tradebalance <- subset(sgtrade_cln_region, Region=="Asia")
 1.  Filter region == "America"
 
 ```{r}
-sgtrade_cln_year_America <- subset(sgtrade_cln_year, Region=="America")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+sgtrade_joined_countryyear_America <- subset(sgtrade_joined_countryyear, Region=="America")
 
 ```
 
 2.  Group by Countries & sum of Total Trade Volumes, sort by sum of Total Trade Volumes before taking the top 15 countries
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-sgtrade_cln_year_America_top15 <- sgtrade_cln_year_America %>%
-  select(Countries, Total_Trade_Volumes_BSGD) %>%
+sgtrade_joined_countryyear_America_top15 <- sgtrade_joined_countryyear_America %>%
+  select(Countries, TotalTradeVolume_BSGD) %>%
   group_by(Countries) %>%
-  summarise(sum_TV = sum(Total_Trade_Volumes_BSGD),
+  summarise(sum_TotalVol = sum(TotalTradeVolume_BSGD),
             .groups = 'drop') %>%
-  arrange(desc(sum_TV)) %>%
+  arrange(desc(sum_TotalVol)) %>%
   slice(0:15)
 
-sgtrade_cln_year_America_top15
+sgtrade_joined_countryyear_America_top15
 ```
 
 ##### 1. Slopegraph
@@ -342,9 +384,12 @@ sgtrade_cln_year_America_top15
 3.  Manually filter 15 countries from previous table
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 top_15_americacountries <- c("United States","Brazil","Mexico","Canada","Puerto Rico","Guam","Colombia","Argentina","Chile","Ecuador","Peru","Uruguay","Paraguay","Venezuela")
 
-sgtrade_cln_year_America <- sgtrade_cln_year_America %>%
+sgtrade_joined_countryyear_America <- sgtrade_joined_countryyear_America %>%
   filter(Countries %in% top_15_americacountries)
 
 ```
@@ -354,7 +399,10 @@ sgtrade_cln_year_America <- sgtrade_cln_year_America %>%
 4.  Filter all countries in top 15 America countries
 
 ```{r}
-totalsgtrade_america <- subset(sgtrade_cln_region, Region=="America")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+totalsgtrade_america <- subset(sgtrade_joined_region, Region=="America")
 totalsgtrade_america <- totalsgtrade_america %>%
   filter(Countries %in% top_15_americacountries)
 ```
@@ -363,13 +411,16 @@ totalsgtrade_america <- totalsgtrade_america %>%
 6.  Pivot both import & export column into one
 
 ```{r}
-totalsgtrade_america <- totalsgtrade_america %>% 
-  group_by(Month_Year, Year, Countries) %>% 
-  summarise(Import = sum(Import_SGD),
-            Export = sum(Export_SGD))
+#| code-fold: true
+#| code-summary: "Show the code"
 
-totalsgtrade_long_america <- totalsgtrade_america %>% 
-  pivot_longer(cols = !c(Month_Year, Year, Countries),
+totalsgtrade_america <- totalsgtrade_america %>% 
+  group_by(MonthYear, Year, Countries) %>% 
+  summarise(Import = sum(ImportSGD),
+            Export = sum(ExportSGD))
+
+totalsgtrade_pivot_america <- totalsgtrade_america %>% 
+  pivot_longer(cols = !c(MonthYear, Year, Countries),
                names_to = "Type",
                values_to = "Values")
 
@@ -380,7 +431,10 @@ totalsgtrade_long_america <- totalsgtrade_america %>%
 7.  Filter only America countries in this table
 
 ```{r}
-totalsgtrade_america_tradebalance <- subset(sgtrade_cln_region, Region=="America")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+totalsgtrade_america_tradebalance <- subset(sgtrade_joined_region, Region=="America")
 ```
 
 ## Europe
@@ -388,24 +442,28 @@ totalsgtrade_america_tradebalance <- subset(sgtrade_cln_region, Region=="America
 1.  Filter region == "Europe"
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-sgtrade_cln_year_Europe <- subset(sgtrade_cln_year, Region=="Europe")
+sgtrade_joined_countryyear_Europe <- subset(sgtrade_joined_countryyear, Region=="Europe")
 
 ```
 
 2.  Group by Countries & sum of Total Trade Volumes, sort by sum of Total Trade Volumes before taking the top 15 countries
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-sgtrade_cln_year_Europe_top15 <- sgtrade_cln_year_Europe %>%
-  select(Countries, Total_Trade_Volumes_BSGD) %>%
+sgtrade_joined_countryyear_Europe_top15 <- sgtrade_joined_countryyear_Europe %>%
+  select(Countries, TotalTradeVolume_BSGD) %>%
   group_by(Countries) %>%
-  summarise(sum_TV = sum(Total_Trade_Volumes_BSGD),
+  summarise(sum_TotalVol = sum(TotalTradeVolume_BSGD),
             .groups = 'drop') %>%
-  arrange(desc(sum_TV)) %>%
+  arrange(desc(sum_TotalVol)) %>%
   slice(0:15)
 
-sgtrade_cln_year_Europe_top15
+sgtrade_joined_countryyear_Europe_top15
 ```
 
 ##### 1. Slopegraph
@@ -413,9 +471,12 @@ sgtrade_cln_year_Europe_top15
 3.  Manually filter 15 countries from previous table
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 top_15_europecountries <- c("Germany", "France", "Netherlands", "Switzerland", "United Kingdom", "Belgium", "Italy", "Ireland", "Malta", "Spain","Sweden","Greece","Czech Republic","Austria","Denmark")
 
-sgtrade_cln_year_Europe <- sgtrade_cln_year_Europe %>%
+sgtrade_joined_countryyear_Europe <- sgtrade_joined_countryyear_Europe %>%
   filter(Countries %in% top_15_europecountries)
 
 ```
@@ -425,7 +486,10 @@ sgtrade_cln_year_Europe <- sgtrade_cln_year_Europe %>%
 4.  Filter all countries in top 15 Europe countries
 
 ```{r}
-totalsgtrade_europe <- subset(sgtrade_cln_region, Region=="Europe")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+totalsgtrade_europe <- subset(sgtrade_joined_region, Region=="Europe")
 totalsgtrade_europe <- totalsgtrade_europe %>%
   filter(Countries %in% top_15_europecountries)
 ```
@@ -434,13 +498,16 @@ totalsgtrade_europe <- totalsgtrade_europe %>%
 6.  Pivot both import & export column into one
 
 ```{r}
-totalsgtrade_europe <- totalsgtrade_europe %>% 
-  group_by(Month_Year, Year, Countries) %>% 
-  summarise(Import = sum(Import_SGD),
-            Export = sum(Export_SGD))
+#| code-fold: true
+#| code-summary: "Show the code"
 
-totalsgtrade_long_europe <- totalsgtrade_europe %>% 
-  pivot_longer(cols = !c(Month_Year, Year, Countries),
+totalsgtrade_europe <- totalsgtrade_europe %>% 
+  group_by(MonthYear, Year, Countries) %>% 
+  summarise(Import = sum(ImportSGD),
+            Export = sum(ExportSGD))
+
+totalsgtrade_pivot_europe <- totalsgtrade_europe %>% 
+  pivot_longer(cols = !c(MonthYear, Year, Countries),
                names_to = "Type",
                values_to = "Values")
 
@@ -451,7 +518,10 @@ totalsgtrade_long_europe <- totalsgtrade_europe %>%
 7.  Filter only Europe countries in this table
 
 ```{r}
-totalsgtrade_europe_tradebalance <- subset(sgtrade_cln_region, Region=="Europe")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+totalsgtrade_europe_tradebalance <- subset(sgtrade_joined_region, Region=="Europe")
 ```
 
 ## Oceania
@@ -459,23 +529,27 @@ totalsgtrade_europe_tradebalance <- subset(sgtrade_cln_region, Region=="Europe")
 1.  Filter region == "Oceania"
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-sgtrade_cln_year_oceania <- subset(sgtrade_cln_year, Region=="Oceania")
+sgtrade_joined_countryyear_oceania <- subset(sgtrade_joined_countryyear, Region=="Oceania")
 ```
 
 2.  Group by countries & sum of Total Trade Volumes, sort by sum of Total Trade Volumes before taking the top 15 countries
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-sgtrade_cln_year_oceania_top15 <- sgtrade_cln_year_oceania %>%
-  select(Countries, Total_Trade_Volumes_BSGD) %>%
+sgtrade_joined_countryyear_oceania_top15 <- sgtrade_joined_countryyear_oceania %>%
+  select(Countries, TotalTradeVolume_BSGD) %>%
   group_by(Countries) %>%
-  summarise(sum_TV = sum(Total_Trade_Volumes_BSGD),
+  summarise(sum_TotalVol = sum(TotalTradeVolume_BSGD),
             .groups = 'drop') %>%
-  arrange(desc(sum_TV)) %>%
+  arrange(desc(sum_TotalVol)) %>%
   slice(0:15)
 
-sgtrade_cln_year_oceania_top15
+sgtrade_joined_countryyear_oceania_top15
 ```
 
 ##### 1. Slopegraph
@@ -483,10 +557,13 @@ sgtrade_cln_year_oceania_top15
 3.  Manually filter 15 countries from previous table
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 top_15_oceaniacountries <- c("Australia","New Zealand","Papua New Guinea","Fiji","Solomon Islands")
 
 
-sgtrade_cln_year_oceania <- sgtrade_cln_year_oceania %>%
+sgtrade_joined_countryyear_oceania <- sgtrade_joined_countryyear_oceania %>%
   filter(Countries %in% top_15_oceaniacountries)
 
 ```
@@ -496,7 +573,10 @@ sgtrade_cln_year_oceania <- sgtrade_cln_year_oceania %>%
 4.  Filter all countries in top 15 Oceania countries
 
 ```{r}
-totalsgtrade_oceania <- subset(sgtrade_cln_region, Region=="Oceania")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+totalsgtrade_oceania <- subset(sgtrade_joined_region, Region=="Oceania")
 totalsgtrade_oceania <- totalsgtrade_oceania %>%
   filter(Countries %in% top_15_oceaniacountries)
 ```
@@ -505,13 +585,16 @@ totalsgtrade_oceania <- totalsgtrade_oceania %>%
 8.  Pivot both import & export column into one
 
 ```{r}
-totalsgtrade_oceania <- totalsgtrade_oceania %>% 
-  group_by(Month_Year, Year, Countries) %>% 
-  summarise(Import = sum(Import_SGD),
-            Export = sum(Export_SGD))
+#| code-fold: true
+#| code-summary: "Show the code"
 
-totalsgtrade_long_oceania <- totalsgtrade_oceania %>% 
-  pivot_longer(cols = !c(Month_Year, Year, Countries),
+totalsgtrade_oceania <- totalsgtrade_oceania %>% 
+  group_by(MonthYear, Year, Countries) %>% 
+  summarise(Import = sum(ImportSGD),
+            Export = sum(ExportSGD))
+
+totalsgtrade_pivot_oceania <- totalsgtrade_oceania %>% 
+  pivot_longer(cols = !c(MonthYear, Year, Countries),
                names_to = "Type",
                values_to = "Values")
 ```
@@ -521,7 +604,10 @@ totalsgtrade_long_oceania <- totalsgtrade_oceania %>%
 9.  Filter only Oceania countries in this table
 
 ```{r}
-totalsgtrade_oceania_tradebalance <- subset(sgtrade_cln_region, Region=="Oceania")
+#| code-fold: true
+#| code-summary: "Show the code"
+
+totalsgtrade_oceania_tradebalance <- subset(sgtrade_joined_region, Region=="Oceania")
 ```
 :::
 
@@ -532,23 +618,28 @@ totalsgtrade_oceania_tradebalance <- subset(sgtrade_cln_region, Region=="Oceania
 In a calendar heatmap, colored cells show the number of events for each period of time. Heatmaps are used to identify seasonal patterns and anomalies in data and enable users to identify these patterns quickly. The heatmap uses colors and saturation to represent data values, so users can easily identify the high and low values based on color intensity in the heatmap.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
 totalsgtrade_calmap <- totalsgtrade %>% 
-  mutate(Month = factor(format(Month_Year,"%b")), .after = Year) %>% 
+  mutate(Month = factor(format(MonthYear,"%b")), .after = Year) %>% 
   mutate(Trade_Balance = (Export - Import)/1000000000,
          Trade_Volumes = (Export + Import)/1000000000)
 
-sgtrade_calmap <- sgtrade_cln %>% 
-  mutate(Trade_Balance = Trade_Balance_SGD/1000000000)
+sgtrade_calmap <- sgtrade_joined %>% 
+  mutate(Trade_Balance = TradeBalance_SGD/1000000000)
 
 
-sgtrade_calmap$Countries <- fct_reorder(sgtrade_calmap$Countries, sgtrade_calmap$Trade_Volumes_SGD, .desc = TRUE)
+sgtrade_calmap$Countries <- fct_reorder(sgtrade_calmap$Countries, sgtrade_calmap$TradeVolume_SGD, .desc = TRUE)
 
 ```
 
 Here, we are plotting the total trade volume over the years & months.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 #Plotting the base plot
 ggplot(totalsgtrade_calmap %>% 
          mutate(Year = factor(Year, levels =c(2022,2021,2020))), 
@@ -563,17 +654,15 @@ ggplot(totalsgtrade_calmap %>%
                     low = "#fc8d59", 
                     high = "#5ab4ac") +
 
-#Ensure equal scales for both coordinates  
-  coord_equal() +
   
-#Setting the theme to remove the x and y axis
+  coord_equal() +
   
   theme(axis.ticks = element_blank(),
       legend.title = element_text(size = 8),
       legend.text = element_text(size = 6),
       plot.title = element_text(face = "bold")) +
   
-#Adding title, subtitle, and captions
+
   labs(x = NULL, 
      y = NULL, 
      title = "Singapore Trade Volume by calendar months, 2020-2022",
@@ -589,6 +678,9 @@ We observe the following:
 -   Singapore trade volume continue to increase from Mar 2021 onwards due to relaxation of covid-restrictions. This is observed by green (high trade volumes) from Mar - Sep 2022. In Oct 2022, there is a slowdown due to recession.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 #Plotting the base plot
 ggplot(totalsgtrade_calmap %>% 
          mutate(Year = factor(Year, levels =c(2022,2021,2020))), 
@@ -603,7 +695,6 @@ ggplot(totalsgtrade_calmap %>%
                      colors=c("#fc8d59","grey90","#5ab4ac"),
                      limits=c(min(totalsgtrade_calmap$Trade_Balance),max(totalsgtrade_calmap$Trade_Balance))) +
 
-#Ensure equal scales for both coordinates  
   coord_equal() +
   
   theme(axis.ticks = element_blank(),
@@ -611,7 +702,6 @@ ggplot(totalsgtrade_calmap %>%
       legend.text = element_text(size = 6),
       plot.title = element_text(face = "bold")) +
   
-#Adding title, subtitle, and captions
   labs(x = NULL, 
      y = NULL, 
      title = "Singapore Trade Balance by calendar months, 2020-2022",
@@ -651,8 +741,11 @@ What is noteworthy about this analysis is that we observe that we often export 
 ## Asia
 
 ```{r fig.align="center", echo = FALSE, fig.width= 20, fig.height=15}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 ggplot(data=totalsgtrade_asia_tradebalance) +
-  geom_horizon(aes(x=Month_Year, y=Trade_Balance_SGD), 
+  geom_horizon(aes(x=MonthYear, y=TradeBalance_SGD), 
                origin = 0, 
                horizonscale = 6)+
   facet_grid(Countries~.) +
@@ -677,8 +770,11 @@ ggplot(data=totalsgtrade_asia_tradebalance) +
 ## America
 
 ```{r fig.align="center", echo = FALSE, fig.width= 20, fig.height=15}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 ggplot(data=totalsgtrade_america_tradebalance) +
-  geom_horizon(aes(x=Month_Year, y=Trade_Balance_SGD), 
+  geom_horizon(aes(x=MonthYear, y=TradeBalance_SGD), 
                origin = 0, 
                horizonscale = 6)+
   facet_grid(Countries~.) +
@@ -703,8 +799,11 @@ ggplot(data=totalsgtrade_america_tradebalance) +
 ## Europe
 
 ```{r fig.align="center", echo = FALSE, fig.width= 20, fig.height=15}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 ggplot(data=totalsgtrade_europe_tradebalance) +
-  geom_horizon(aes(x=Month_Year, y=Trade_Balance_SGD), 
+  geom_horizon(aes(x=MonthYear, y=TradeBalance_SGD), 
                origin = 0, 
                horizonscale = 6)+
   facet_grid(Countries~.) +
@@ -729,8 +828,11 @@ ggplot(data=totalsgtrade_europe_tradebalance) +
 ## Oceania
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 ggplot(data=totalsgtrade_oceania_tradebalance) +
-  geom_horizon(aes(x=Month_Year, y=Trade_Balance_SGD), 
+  geom_horizon(aes(x=MonthYear, y=TradeBalance_SGD), 
                origin = 0, 
                horizonscale = 6)+
   facet_grid(Countries~.) +
@@ -766,18 +868,20 @@ Similar patterns can be found in different regions, as evidenced by the Trade Ba
 ## Overall
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
 #Plotting the base plot
-br_plot <- ggplot() +
-  geom_line(data = totalsgtrade_long,
-            aes(x = Month_Year,
+exim_plot <- ggplot() +
+  geom_line(data = totalsgtrade_pivot,
+            aes(x = MonthYear,
                 y = Values,
                 group = Type,
                 color = Type),
             linewidth = 1) +
   
   geom_braid(data = totalsgtrade,
-             aes(x = Month_Year,
+             aes(x = MonthYear,
                  ymin = Import,
                  ymax = Export,
                  fill = Import < Export),
@@ -787,15 +891,15 @@ br_plot <- ggplot() +
   guides(linetype = "none", fill = "none") +
   
 #Adding the 'Import' and 'Export' labels at the end of the line charts
-  geom_dl(data = totalsgtrade_long,
-          aes(x = Month_Year,
+  geom_dl(data = totalsgtrade_pivot,
+          aes(x = MonthYear,
               y = Values,
               label = Type,
               color = Type),
           method = list(dl.trans(x = x + 0.2), "last.points", cex = 1)) +
   
-  geom_dl(data = totalsgtrade_long,
-          aes(x = Month_Year,
+  geom_dl(data = totalsgtrade_pivot,
+          aes(x = MonthYear,
               y = Values,
               label = Type,
               color = Type),
@@ -829,24 +933,26 @@ br_plot <- ggplot() +
          subtitle = "2020-2022",
          caption = "Department of Statistics, Singapore")
 
-br_plot
+exim_plot
 ```
 
 ## Asia
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
 #Plotting the base plot
-br_plot_asia <- ggplot() +
-  geom_line(data = totalsgtrade_long_asia,
-            aes(x = Month_Year,
+exim_plot_asia <- ggplot() +
+  geom_line(data = totalsgtrade_pivot_asia,
+            aes(x = MonthYear,
                 y = Values,
                 group = Type,
                 color = Type),
             linewidth = 1) +
   
   geom_braid(data = totalsgtrade_asia,
-             aes(x = Month_Year,
+             aes(x = MonthYear,
                  ymin = Import,
                  ymax = Export,
                  fill = Import < Export),
@@ -888,24 +994,26 @@ br_plot_asia <- ggplot() +
     axis.text.x = element_text(size=6, angle=45, hjust = 1)
   )
 
-br_plot_asia
+exim_plot_asia
 ```
 
 ## America
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
 #Plotting the base plot
-br_plot_america <- ggplot() +
-  geom_line(data = totalsgtrade_long_america,
-            aes(x = Month_Year,
+exim_plot_america <- ggplot() +
+  geom_line(data = totalsgtrade_pivot_america,
+            aes(x = MonthYear,
                 y = Values,
                 group = Type,
                 color = Type),
             linewidth = 1) +
   
   geom_braid(data = totalsgtrade_america,
-             aes(x = Month_Year,
+             aes(x = MonthYear,
                  ymin = Import,
                  ymax = Export,
                  fill = Import < Export),
@@ -947,24 +1055,26 @@ br_plot_america <- ggplot() +
     axis.text.x = element_text(size=6, angle=45, hjust = 1)
   )
 
-br_plot_america
+exim_plot_america
 ```
 
 ## Europe
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
 #Plotting the base plot
-br_plot_europe <- ggplot() +
-  geom_line(data = totalsgtrade_long_europe,
-            aes(x = Month_Year,
+exim_plot_europe <- ggplot() +
+  geom_line(data = totalsgtrade_pivot_europe,
+            aes(x = MonthYear,
                 y = Values,
                 group = Type,
                 color = Type),
             linewidth = 1) +
   
   geom_braid(data = totalsgtrade_europe,
-             aes(x = Month_Year,
+             aes(x = MonthYear,
                  ymin = Import,
                  ymax = Export,
                  fill = Import < Export),
@@ -1006,24 +1116,26 @@ br_plot_europe <- ggplot() +
     axis.text.x = element_text(size=6, angle=45, hjust = 1)
   )
 
-br_plot_europe
+exim_plot_europe
 ```
 
 ## Oceania
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
 #Plotting the base plot
-br_plot_oceania <- ggplot() +
-  geom_line(data = totalsgtrade_long_oceania,
-            aes(x = Month_Year,
+exim_plot_oceania <- ggplot() +
+  geom_line(data = totalsgtrade_pivot_oceania,
+            aes(x = MonthYear,
                 y = Values,
                 group = Type,
                 color = Type),
             linewidth = 1) +
   
   geom_braid(data = totalsgtrade_oceania,
-             aes(x = Month_Year,
+             aes(x = MonthYear,
                  ymin = Import,
                  ymax = Export,
                  fill = Import < Export),
@@ -1065,7 +1177,7 @@ br_plot_oceania <- ggplot() +
     axis.text.x = element_text(size=6, angle=45, hjust = 1)
   )
 
-br_plot_oceania
+exim_plot_oceania
 ```
 :::
 
@@ -1075,14 +1187,22 @@ The Slopegraph depicts the year-on-year trend of these countries' total trade ba
 
 In Asia, we can see that Hong Kong remains the top exporter of Singapore year on year (increasing trend). While Taiwan remains the top importer of Singapore year on year (decreasing trend).
 
+In America, it is interesting to note that United States turned from trade surplus in 2020 to trade deficit in 2021 and 2022.
+
+In Europe, most countries seems to be quite stable across the years and with more countries with trade deficit, this could be due to the ongoing European Union-Singapore Free Trade Agreement and the hit in resources from Russia-Ukraine war which meant more imports from Singapore.
+
+In Oceania, it is interesting to see that we are exporting more to Australia & New Zealand over the years.
+
 ::: panel-tabset
 ## Asia
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-# group by year, sum up import and export
-CGPfunctions::newggslopegraph(dataframe = sgtrade_cln_year_Asia,
-                Year, Total_Trade_Balance_BSGD, Countries,
+
+CGPfunctions::newggslopegraph(dataframe = sgtrade_joined_countryyear_Asia,
+                Year, TotalTradeBalance_BSGD, Countries,
                 Title = "Year-on-Year change of Total Trade Balance (Countries in Asia)",
                 SubTitle = "2020 - 2022",
                 Caption = "Department of Statistics, Singapore")
@@ -1092,10 +1212,12 @@ CGPfunctions::newggslopegraph(dataframe = sgtrade_cln_year_Asia,
 ## America
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-# group by year, sum up import and export
-CGPfunctions::newggslopegraph(dataframe = sgtrade_cln_year_America,
-                Year, Total_Trade_Balance_BSGD, Countries,
+
+CGPfunctions::newggslopegraph(dataframe = sgtrade_joined_countryyear_America,
+                Year, TotalTradeBalance_BSGD, Countries,
                 Title = "Year-on-Year change of Total Trade Balance (Countries in America)",
                 SubTitle = "2020 - 2022",
                 Caption = "Department of Statistics, Singapore")
@@ -1105,10 +1227,11 @@ CGPfunctions::newggslopegraph(dataframe = sgtrade_cln_year_America,
 ## Europe
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-# group by year, sum up import and export
-CGPfunctions::newggslopegraph(dataframe = sgtrade_cln_year_Europe,
-                Year, Total_Trade_Balance_BSGD, Countries,
+CGPfunctions::newggslopegraph(dataframe = sgtrade_joined_countryyear_Europe,
+                Year, TotalTradeBalance_BSGD, Countries,
                 Title = "Year-on-Year change of Total Trade Balance (Countries in Europe)",
                 SubTitle = "2020 - 2022",
                 Caption = "Department of Statistics, Singapore")
@@ -1118,10 +1241,11 @@ CGPfunctions::newggslopegraph(dataframe = sgtrade_cln_year_Europe,
 ## Oceania
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
  
-# group by year, sum up import and export
-CGPfunctions::newggslopegraph(dataframe = sgtrade_cln_year_oceania,
-                Year, Total_Trade_Balance_BSGD, Countries,
+CGPfunctions::newggslopegraph(dataframe = sgtrade_joined_countryyear_oceania,
+                Year, TotalTradeBalance_BSGD, Countries,
                 Title = "Year-on-Year change of Total Trade Balance (Countries in Oceania)",
                 SubTitle = "2020 - 2022",
                 Caption = "Department of Statistics, Singapore")
@@ -1131,14 +1255,14 @@ CGPfunctions::newggslopegraph(dataframe = sgtrade_cln_year_oceania,
 
 # 5. References
 
-https://nsgrantham.github.io/ggbraid/
+*Enterprise singapore -- growing enterprises*. Enterprise Singapore â Growing Enterprises. (n.d.). Retrieved February 26, 2023, from https://www.enterprisesg.gov.sg/
 
-https://www.mti.gov.sg/Trade/Multilateral-and-Regional-Forums
+Grantham, N. (n.d.). *Braid ribbons in GGPLOT2*. Braid Ribbons in ggplot2. Retrieved February 26, 2023, from https://nsgrantham.github.io/ggbraid/
 
-https://tradingeconomics.com/singapore/exports
+*Multilateral & Regional Forums*. MTI. (n.d.). Retrieved February 26, 2023, from https://www.mti.gov.sg/Trade/Multilateral-and-Regional-Forums
 
-https://www.singstat.gov.sg/modules/infographics/singapore-international-trade
+*Singapore - Trade Agreements*. International Trade Administration \| Trade.gov. (n.d.). Retrieved February 26, 2023, from https://www.trade.gov/country-commercial-guides/singapore-trade-agreements#:\~:text=Singapore%20also%20has%20many%20bilateral,Union%2C%20United%20Kingdom%20and%20Turkey.
 
-https://www.enterprisesg.gov.sg/-/media/esg/files/media-centre/media-releases/2020/may-2020/monthly-trade-report---apr-2020.pdf?la=en
+*Singapore ExportsJanuary 2023 Data - 1964-2022 historical - February forecast*. Singapore Exports - January 2023 Data - 1964-2022 Historical - February Forecast. (n.d.). Retrieved February 26, 2023, from https://tradingeconomics.com/singapore/exports
 
-https://www.trade.gov/country-commercial-guides/singapore-trade-agreements#:\~:text=Singapore%20also%20has%20many%20bilateral,Union%2C%20United%20Kingdom%20and%20Turkey.
+*Singapore International Trade*. Base. (n.d.). Retrieved February 26, 2023, from https://www.singstat.gov.sg/modules/infographics/singapore-international-trade
