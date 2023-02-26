@@ -2,10 +2,8 @@
 title: "Take-home Exercise 4"
 author: "Eda Chang"
 
-format:
-  html:
-    code-fold: true
-    code-tools: true
+execute:
+  echo: false
 ---
 
 # The task
